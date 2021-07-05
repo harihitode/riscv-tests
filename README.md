@@ -1,6 +1,10 @@
 riscv-tests
 ================
 
+Quick Usage
+
+`make -B RISCV_TARGET=ladybug RISCV_DEVICE=F RISCV_TEST="fadd"
+
 About
 -----------
 
