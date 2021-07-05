@@ -4,7 +4,7 @@ RISCV_CC       ?= $(RISCV_PREFIX)gcc
 RISCV_OBJDUMP  ?= $(RISCV_PREFIX)objdump
 RISCV_OBJCOPY  ?= $(RISCV_PREFIX)objcopy
 RISCV_LD       ?= $(RISCV_PREFIX)ld
-RISCV_CC_OPTS  ?= -march=rv64g -mabi=lp64f -static -mno-relax -mcmodel=medany -g -fvisibility=hidden -nostdlib -nostartfiles --verbose -DXLEN=$(XLEN) $(RVTEST_DEFINES)
+RISCV_CC_OPTS  ?= -march=rv32if -mabi=ilp32f -static -mno-relax -mcmodel=medany -g -fvisibility=hidden -nostdlib -nostartfiles --verbose -DXLEN=$(XLEN) $(RVTEST_DEFINES)
 RISCV_READELF  ?= $(RISCV_PREFIX)readelf
 
 COMPILE_CMD=\
