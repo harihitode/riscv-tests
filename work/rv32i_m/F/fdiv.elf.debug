@@ -1,5 +1,5 @@
 
-/home/hamada/risc-v_git/riscv-tests/work/rv32i_m/F/fdiv.elf:     ファイル形式 elf32-littleriscv
+/home/hamada/risc-v_git/riscv-tests_C/riscv-tests/work/rv32i_m/F/fdiv.elf:     ファイル形式 elf32-littleriscv
 
 
 セクション .text.init の逆アセンブル:
@@ -79,7 +79,7 @@ RVTEST_CODE_BEGIN
   4000e4:	02028293          	addi	t0,t0,32 # 400100 <reset_vector+0xb4>
   4000e8:	30529073          	csrw	mtvec,t0
   4000ec:	800002b7          	lui	t0,0x80000
-  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffaef>
+  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffc2f>
   4000f4:	3b029073          	csrw	pmpaddr0,t0
   4000f8:	01f00293          	li	t0,31
   4000fc:	3a029073          	csrw	pmpcfg0,t0
@@ -95,217 +95,172 @@ RVTEST_CODE_BEGIN
   400124:	30529073          	csrw	mtvec,t0
   400128:	00100513          	li	a0,1
   40012c:	01f51513          	slli	a0,a0,0x1f
-  400130:	00054c63          	bltz	a0,400148 <reset_vector+0xfc>
+  400130:	00054e63          	bltz	a0,40014c <reset_vector+0x100>
   400134:	0ff0000f          	fence
   400138:	00100193          	li	gp,1
   40013c:	05d00893          	li	a7,93
   400140:	00000513          	li	a0,0
-  400144:	00000073          	ecall
-  400148:	ffc00297          	auipc	t0,0xffc00
-  40014c:	eb828293          	addi	t0,t0,-328 # 0 <tohost-0x300000>
-  400150:	00028a63          	beqz	t0,400164 <reset_vector+0x118>
-  400154:	10529073          	csrw	stvec,t0
-  400158:	0000b2b7          	lui	t0,0xb
-  40015c:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
-  400160:	30229073          	csrw	medeleg,t0
-  400164:	30005073          	csrwi	mstatus,0
-  400168:	00002537          	lui	a0,0x2
-  40016c:	30052073          	csrs	mstatus,a0
-  400170:	00305073          	csrwi	fcsr,0
-  400174:	00000297          	auipc	t0,0x0
-  400178:	01428293          	addi	t0,t0,20 # 400188 <test_2>
-  40017c:	34129073          	csrw	mepc,t0
-  400180:	f1402573          	csrr	a0,mhartid
-  400184:	30200073          	mret
+  400144:	cda2d073          	csrwi	0xcda,5
+  400148:	00000073          	ecall
+  40014c:	ffc00297          	auipc	t0,0xffc00
+  400150:	eb428293          	addi	t0,t0,-332 # 0 <tohost-0x300000>
+  400154:	00028a63          	beqz	t0,400168 <reset_vector+0x11c>
+  400158:	10529073          	csrw	stvec,t0
+  40015c:	0000b2b7          	lui	t0,0xb
+  400160:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
+  400164:	30229073          	csrw	medeleg,t0
+  400168:	30005073          	csrwi	mstatus,0
+  40016c:	00002537          	lui	a0,0x2
+  400170:	30052073          	csrs	mstatus,a0
+  400174:	00305073          	csrwi	fcsr,0
+  400178:	00000297          	auipc	t0,0x0
+  40017c:	01428293          	addi	t0,t0,20 # 40018c <test_2>
+  400180:	34129073          	csrw	mepc,t0
+  400184:	f1402573          	csrr	a0,mhartid
+  400188:	30200073          	mret
 
-00400188 <test_2>:
+0040018c <test_2>:
 
   #-------------------------------------------------------------
   # Arithmetic tests
   #-------------------------------------------------------------
 
-  TEST_FP_OP2_D( 2,  fdiv.d, 1, 1.1557273520668288, 3.14159265, 2.71828182 );
-  400188:	00200193          	li	gp,2
-  40018c:	00000517          	auipc	a0,0x0
-  400190:	28450513          	addi	a0,a0,644 # 400410 <test_2_data>
-  400194:	00053007          	fld	ft0,0(a0)
-  400198:	00853087          	fld	ft1,8(a0)
-  40019c:	01053107          	fld	ft2,16(a0)
-  4001a0:	01852683          	lw	a3,24(a0)
-  4001a4:	01c52303          	lw	t1,28(a0)
-  4001a8:	1a1071d3          	fdiv.d	ft3,ft0,ft1
-  4001ac:	00353027          	fsd	ft3,0(a0)
-  4001b0:	00452383          	lw	t2,4(a0)
-  4001b4:	00052503          	lw	a0,0(a0)
-  4001b8:	001015f3          	fsflags	a1,zero
-  4001bc:	00100613          	li	a2,1
-  4001c0:	1ed51663          	bne	a0,a3,4003ac <fail>
-  4001c4:	1e731463          	bne	t1,t2,4003ac <fail>
-  4001c8:	1ec59263          	bne	a1,a2,4003ac <fail>
+  TEST_FP_OP2_S(2,  fdiv.s, 1, 1.1557273520668288, 3.14159265, 2.71828182 );
+  40018c:	00200193          	li	gp,2
+  400190:	00000517          	auipc	a0,0x0
+  400194:	1c050513          	addi	a0,a0,448 # 400350 <test_2_data>
+  400198:	00052007          	flw	ft0,0(a0)
+  40019c:	00452087          	flw	ft1,4(a0)
+  4001a0:	00852107          	flw	ft2,8(a0)
+  4001a4:	00c52683          	lw	a3,12(a0)
+  4001a8:	181071d3          	fdiv.s	ft3,ft0,ft1
+  4001ac:	e0018553          	fmv.x.w	a0,ft3
+  4001b0:	001015f3          	fsflags	a1,zero
+  4001b4:	00100613          	li	a2,1
+  4001b8:	14d51263          	bne	a0,a3,4002fc <fail>
+  4001bc:	14c59063          	bne	a1,a2,4002fc <fail>
 
-004001cc <test_3>:
-  TEST_FP_OP2_D( 3,  fdiv.d, 1,-0.9991093838555584,      -1234,     1235.1 );
-  4001cc:	00300193          	li	gp,3
-  4001d0:	00000517          	auipc	a0,0x0
-  4001d4:	26050513          	addi	a0,a0,608 # 400430 <test_3_data>
-  4001d8:	00053007          	fld	ft0,0(a0)
-  4001dc:	00853087          	fld	ft1,8(a0)
-  4001e0:	01053107          	fld	ft2,16(a0)
-  4001e4:	01852683          	lw	a3,24(a0)
-  4001e8:	01c52303          	lw	t1,28(a0)
-  4001ec:	1a1071d3          	fdiv.d	ft3,ft0,ft1
-  4001f0:	00353027          	fsd	ft3,0(a0)
-  4001f4:	00452383          	lw	t2,4(a0)
-  4001f8:	00052503          	lw	a0,0(a0)
-  4001fc:	001015f3          	fsflags	a1,zero
-  400200:	00100613          	li	a2,1
-  400204:	1ad51463          	bne	a0,a3,4003ac <fail>
-  400208:	1a731263          	bne	t1,t2,4003ac <fail>
-  40020c:	1ac59063          	bne	a1,a2,4003ac <fail>
+004001c0 <test_3>:
+  TEST_FP_OP2_S(3,  fdiv.s, 1,-0.9991093838555584,      -1234,     1235.1 );
+  4001c0:	00300193          	li	gp,3
+  4001c4:	00000517          	auipc	a0,0x0
+  4001c8:	19c50513          	addi	a0,a0,412 # 400360 <test_3_data>
+  4001cc:	00052007          	flw	ft0,0(a0)
+  4001d0:	00452087          	flw	ft1,4(a0)
+  4001d4:	00852107          	flw	ft2,8(a0)
+  4001d8:	00c52683          	lw	a3,12(a0)
+  4001dc:	181071d3          	fdiv.s	ft3,ft0,ft1
+  4001e0:	e0018553          	fmv.x.w	a0,ft3
+  4001e4:	001015f3          	fsflags	a1,zero
+  4001e8:	00100613          	li	a2,1
+  4001ec:	10d51863          	bne	a0,a3,4002fc <fail>
+  4001f0:	10c59663          	bne	a1,a2,4002fc <fail>
 
-00400210 <test_4>:
-  TEST_FP_OP2_D( 4,  fdiv.d, 0,         3.14159265, 3.14159265,        1.0 );
-  400210:	00400193          	li	gp,4
-  400214:	00000517          	auipc	a0,0x0
-  400218:	23c50513          	addi	a0,a0,572 # 400450 <test_4_data>
-  40021c:	00053007          	fld	ft0,0(a0)
-  400220:	00853087          	fld	ft1,8(a0)
-  400224:	01053107          	fld	ft2,16(a0)
-  400228:	01852683          	lw	a3,24(a0)
-  40022c:	01c52303          	lw	t1,28(a0)
-  400230:	1a1071d3          	fdiv.d	ft3,ft0,ft1
-  400234:	00353027          	fsd	ft3,0(a0)
-  400238:	00452383          	lw	t2,4(a0)
-  40023c:	00052503          	lw	a0,0(a0)
-  400240:	001015f3          	fsflags	a1,zero
-  400244:	00000613          	li	a2,0
-  400248:	16d51263          	bne	a0,a3,4003ac <fail>
-  40024c:	16731063          	bne	t1,t2,4003ac <fail>
-  400250:	14c59e63          	bne	a1,a2,4003ac <fail>
+004001f4 <test_4>:
+  TEST_FP_OP2_S(4,  fdiv.s, 0,         3.14159265, 3.14159265,        1.0 );
+  4001f4:	00400193          	li	gp,4
+  4001f8:	00000517          	auipc	a0,0x0
+  4001fc:	17850513          	addi	a0,a0,376 # 400370 <test_4_data>
+  400200:	00052007          	flw	ft0,0(a0)
+  400204:	00452087          	flw	ft1,4(a0)
+  400208:	00852107          	flw	ft2,8(a0)
+  40020c:	00c52683          	lw	a3,12(a0)
+  400210:	181071d3          	fdiv.s	ft3,ft0,ft1
+  400214:	e0018553          	fmv.x.w	a0,ft3
+  400218:	001015f3          	fsflags	a1,zero
+  40021c:	00000613          	li	a2,0
+  400220:	0cd51e63          	bne	a0,a3,4002fc <fail>
+  400224:	0cc59c63          	bne	a1,a2,4002fc <fail>
 
-00400254 <test_5>:
+00400228 <test_5>:
 
-  TEST_FP_OP1_D( 5,  fsqrt.d, 1, 1.7724538498928541, 3.14159265 );
-  400254:	00500193          	li	gp,5
-  400258:	00000517          	auipc	a0,0x0
-  40025c:	21850513          	addi	a0,a0,536 # 400470 <test_5_data>
-  400260:	00053007          	fld	ft0,0(a0)
-  400264:	00853087          	fld	ft1,8(a0)
-  400268:	01053107          	fld	ft2,16(a0)
-  40026c:	01852683          	lw	a3,24(a0)
-  400270:	01c52303          	lw	t1,28(a0)
-  400274:	5a0071d3          	fsqrt.d	ft3,ft0
-  400278:	00353027          	fsd	ft3,0(a0)
-  40027c:	00452383          	lw	t2,4(a0)
-  400280:	00052503          	lw	a0,0(a0)
-  400284:	001015f3          	fsflags	a1,zero
-  400288:	00100613          	li	a2,1
-  40028c:	12d51063          	bne	a0,a3,4003ac <fail>
-  400290:	10731e63          	bne	t1,t2,4003ac <fail>
-  400294:	10c59c63          	bne	a1,a2,4003ac <fail>
+  TEST_FP_OP1_S(5,  fsqrt.s, 1, 1.7724538498928541, 3.14159265 );
+  400228:	00500193          	li	gp,5
+  40022c:	00000517          	auipc	a0,0x0
+  400230:	15450513          	addi	a0,a0,340 # 400380 <test_5_data>
+  400234:	00052007          	flw	ft0,0(a0)
+  400238:	00452087          	flw	ft1,4(a0)
+  40023c:	00852107          	flw	ft2,8(a0)
+  400240:	00c52683          	lw	a3,12(a0)
+  400244:	580071d3          	fsqrt.s	ft3,ft0
+  400248:	e0018553          	fmv.x.w	a0,ft3
+  40024c:	001015f3          	fsflags	a1,zero
+  400250:	00100613          	li	a2,1
+  400254:	0ad51463          	bne	a0,a3,4002fc <fail>
+  400258:	0ac59263          	bne	a1,a2,4002fc <fail>
 
-00400298 <test_6>:
-  TEST_FP_OP1_D( 6,  fsqrt.d, 0,                100,      10000 );
-  400298:	00600193          	li	gp,6
-  40029c:	00000517          	auipc	a0,0x0
-  4002a0:	1f450513          	addi	a0,a0,500 # 400490 <test_6_data>
-  4002a4:	00053007          	fld	ft0,0(a0)
-  4002a8:	00853087          	fld	ft1,8(a0)
-  4002ac:	01053107          	fld	ft2,16(a0)
-  4002b0:	01852683          	lw	a3,24(a0)
-  4002b4:	01c52303          	lw	t1,28(a0)
-  4002b8:	5a0071d3          	fsqrt.d	ft3,ft0
-  4002bc:	00353027          	fsd	ft3,0(a0)
-  4002c0:	00452383          	lw	t2,4(a0)
-  4002c4:	00052503          	lw	a0,0(a0)
-  4002c8:	001015f3          	fsflags	a1,zero
-  4002cc:	00000613          	li	a2,0
-  4002d0:	0cd51e63          	bne	a0,a3,4003ac <fail>
-  4002d4:	0c731c63          	bne	t1,t2,4003ac <fail>
-  4002d8:	0cc59a63          	bne	a1,a2,4003ac <fail>
+0040025c <test_6>:
+  TEST_FP_OP1_S(6,  fsqrt.s, 0,                100,      10000 );
+  40025c:	00600193          	li	gp,6
+  400260:	00000517          	auipc	a0,0x0
+  400264:	13050513          	addi	a0,a0,304 # 400390 <test_6_data>
+  400268:	00052007          	flw	ft0,0(a0)
+  40026c:	00452087          	flw	ft1,4(a0)
+  400270:	00852107          	flw	ft2,8(a0)
+  400274:	00c52683          	lw	a3,12(a0)
+  400278:	580071d3          	fsqrt.s	ft3,ft0
+  40027c:	e0018553          	fmv.x.w	a0,ft3
+  400280:	001015f3          	fsflags	a1,zero
+  400284:	00000613          	li	a2,0
+  400288:	06d51a63          	bne	a0,a3,4002fc <fail>
+  40028c:	06c59863          	bne	a1,a2,4002fc <fail>
 
-004002dc <test_16>:
+00400290 <test_7>:
 
-  TEST_FP_OP1_D_DWORD_RESULT(16,  fsqrt.d, 0x10,      0x7FF8000000000000,      -1.0 );
-  4002dc:	01000193          	li	gp,16
-  4002e0:	00000517          	auipc	a0,0x0
-  4002e4:	1d050513          	addi	a0,a0,464 # 4004b0 <test_16_data>
-  4002e8:	00053007          	fld	ft0,0(a0)
-  4002ec:	00853087          	fld	ft1,8(a0)
-  4002f0:	01053107          	fld	ft2,16(a0)
-  4002f4:	01852683          	lw	a3,24(a0)
-  4002f8:	01c52303          	lw	t1,28(a0)
-  4002fc:	5a0071d3          	fsqrt.d	ft3,ft0
-  400300:	00353027          	fsd	ft3,0(a0)
-  400304:	00452383          	lw	t2,4(a0)
-  400308:	00052503          	lw	a0,0(a0)
-  40030c:	001015f3          	fsflags	a1,zero
-  400310:	01000613          	li	a2,16
-  400314:	08d51c63          	bne	a0,a3,4003ac <fail>
-  400318:	08731a63          	bne	t1,t2,4003ac <fail>
-  40031c:	08c59863          	bne	a1,a2,4003ac <fail>
+  TEST_FP_OP1_S_DWORD_RESULT(7,  fsqrt.s, 0x10, 0x7FC00000, -1.0 );
+  400290:	00700193          	li	gp,7
+  400294:	00000517          	auipc	a0,0x0
+  400298:	10c50513          	addi	a0,a0,268 # 4003a0 <test_7_data>
+  40029c:	00052007          	flw	ft0,0(a0)
+  4002a0:	00452087          	flw	ft1,4(a0)
+  4002a4:	00852107          	flw	ft2,8(a0)
+  4002a8:	00c52683          	lw	a3,12(a0)
+  4002ac:	580071d3          	fsqrt.s	ft3,ft0
+  4002b0:	e0018553          	fmv.x.w	a0,ft3
+  4002b4:	001015f3          	fsflags	a1,zero
+  4002b8:	01000613          	li	a2,16
+  4002bc:	04d51063          	bne	a0,a3,4002fc <fail>
+  4002c0:	02c59e63          	bne	a1,a2,4002fc <fail>
 
-00400320 <test_7>:
+004002c4 <test_8>:
 
-  TEST_FP_OP1_D( 7,  fsqrt.d, 1, 13.076696830622021, 171.0);
-  400320:	00700193          	li	gp,7
-  400324:	00000517          	auipc	a0,0x0
-  400328:	1ac50513          	addi	a0,a0,428 # 4004d0 <test_7_data>
-  40032c:	00053007          	fld	ft0,0(a0)
-  400330:	00853087          	fld	ft1,8(a0)
-  400334:	01053107          	fld	ft2,16(a0)
-  400338:	01852683          	lw	a3,24(a0)
-  40033c:	01c52303          	lw	t1,28(a0)
-  400340:	5a0071d3          	fsqrt.d	ft3,ft0
-  400344:	00353027          	fsd	ft3,0(a0)
-  400348:	00452383          	lw	t2,4(a0)
-  40034c:	00052503          	lw	a0,0(a0)
-  400350:	001015f3          	fsflags	a1,zero
-  400354:	00100613          	li	a2,1
-  400358:	04d51a63          	bne	a0,a3,4003ac <fail>
-  40035c:	04731863          	bne	t1,t2,4003ac <fail>
-  400360:	04c59663          	bne	a1,a2,4003ac <fail>
-
-00400364 <test_8>:
-
-  TEST_FP_OP1_D( 8,  fsqrt.d, 1,0.00040099251863345283320230749702, 1.60795e-7);
-  400364:	00800193          	li	gp,8
-  400368:	00000517          	auipc	a0,0x0
-  40036c:	18850513          	addi	a0,a0,392 # 4004f0 <test_8_data>
-  400370:	00053007          	fld	ft0,0(a0)
-  400374:	00853087          	fld	ft1,8(a0)
-  400378:	01053107          	fld	ft2,16(a0)
-  40037c:	01852683          	lw	a3,24(a0)
-  400380:	01c52303          	lw	t1,28(a0)
-  400384:	5a0071d3          	fsqrt.d	ft3,ft0
-  400388:	00353027          	fsd	ft3,0(a0)
-  40038c:	00452383          	lw	t2,4(a0)
-  400390:	00052503          	lw	a0,0(a0)
-  400394:	001015f3          	fsflags	a1,zero
-  400398:	00100613          	li	a2,1
-  40039c:	00d51863          	bne	a0,a3,4003ac <fail>
-  4003a0:	00731663          	bne	t1,t2,4003ac <fail>
-  4003a4:	00c59463          	bne	a1,a2,4003ac <fail>
+  TEST_FP_OP1_S(8,  fsqrt.s, 1, 13.076696, 171.0);
+  4002c4:	00800193          	li	gp,8
+  4002c8:	00000517          	auipc	a0,0x0
+  4002cc:	0ec50513          	addi	a0,a0,236 # 4003b4 <test_8_data>
+  4002d0:	00052007          	flw	ft0,0(a0)
+  4002d4:	00452087          	flw	ft1,4(a0)
+  4002d8:	00852107          	flw	ft2,8(a0)
+  4002dc:	00c52683          	lw	a3,12(a0)
+  4002e0:	580071d3          	fsqrt.s	ft3,ft0
+  4002e4:	e0018553          	fmv.x.w	a0,ft3
+  4002e8:	001015f3          	fsflags	a1,zero
+  4002ec:	00100613          	li	a2,1
+  4002f0:	00d51663          	bne	a0,a3,4002fc <fail>
+  4002f4:	00c59463          	bne	a1,a2,4002fc <fail>
 
   TEST_PASSFAIL
-  4003a8:	02301063          	bne	zero,gp,4003c8 <pass>
+  4002f8:	02301463          	bne	zero,gp,400320 <pass>
 
-004003ac <fail>:
-  4003ac:	0ff0000f          	fence
-  4003b0:	00018063          	beqz	gp,4003b0 <fail+0x4>
-  4003b4:	00119193          	slli	gp,gp,0x1
-  4003b8:	0011e193          	ori	gp,gp,1
-  4003bc:	05d00893          	li	a7,93
-  4003c0:	00018513          	mv	a0,gp
-  4003c4:	00000073          	ecall
+004002fc <fail>:
+  4002fc:	0ff0000f          	fence
+  400300:	00018063          	beqz	gp,400300 <fail+0x4>
+  400304:	00119193          	slli	gp,gp,0x1
+  400308:	0011e193          	ori	gp,gp,1
+  40030c:	05d00893          	li	a7,93
+  400310:	00018513          	mv	a0,gp
+  400314:	cda4d073          	csrwi	0xcda,9
+  400318:	cd90e073          	csrsi	0xcd9,1
+  40031c:	00000073          	ecall
 
-004003c8 <pass>:
-  4003c8:	0ff0000f          	fence
-  4003cc:	00100193          	li	gp,1
-  4003d0:	05d00893          	li	a7,93
-  4003d4:	00000513          	li	a0,0
-  4003d8:	00000073          	ecall
+00400320 <pass>:
+  400320:	0ff0000f          	fence
+  400324:	00100193          	li	gp,1
+  400328:	05d00893          	li	a7,93
+  40032c:	00000513          	li	a0,0
+  400330:	cda2d073          	csrwi	0xcda,5
+  400334:	00000073          	ecall
 
 RVTEST_CODE_END
-  4003dc:	c0001073          	unimp
+  400338:	c0001073          	unimp
 	...

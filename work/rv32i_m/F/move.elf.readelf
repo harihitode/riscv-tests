@@ -1,0 +1,112 @@
+ELF ヘッダ:
+  マジック:  7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  クラス:                            ELF32
+  データ:                            2 の補数、リトルエンディアン
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI バージョン:                    0
+  型:                                EXEC (実行可能ファイル)
+  マシン:                            RISC-V
+  バージョン:                        0x1
+  エントリポイントアドレス:          0x400484
+  プログラムヘッダ始点:            52 (バイト)
+  セクションヘッダ始点:              10920 (バイト)
+  フラグ:                            0x2, single-float ABI
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         2
+  Size of section headers:           40 (bytes)
+  Number of section headers:         13
+  Section header string table index: 12
+
+セクションヘッダ:
+  [番] 名前              タイプ          アドレス Off    サイズ ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text.init        PROGBITS        00400000 002000 000484 00  AX  0   0 64
+  [ 2] .tohost           PROGBITS        00300000 001000 000048 00  WA  0   0 64
+  [ 3] .riscv.attributes RISCV_ATTRIBUTE 00000000 002484 000023 00      0   0  1
+  [ 4] .debug_line       PROGBITS        00000000 0024a7 0000c8 00      0   0  1
+  [ 5] .debug_line_str   PROGBITS        00000000 00256f 000015 01  MS  0   0  1
+  [ 6] .debug_info       PROGBITS        00000000 002584 000025 00      0   0  1
+  [ 7] .debug_abbrev     PROGBITS        00000000 0025a9 000014 00      0   0  1
+  [ 8] .debug_aranges    PROGBITS        00000000 0025c0 000020 00      0   0  8
+  [ 9] .debug_str        PROGBITS        00000000 0025e0 000062 01  MS  0   0  1
+  [10] .symtab           SYMTAB          00000000 002644 0002b0 10     11  37  4
+  [11] .strtab           STRTAB          00000000 0028f4 000121 00      0   0  1
+  [12] .shstrtab         STRTAB          00000000 002a15 000090 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  p (processor specific)
+
+このファイルにはセクショングループがありません。
+
+プログラムヘッダ:
+  タイプ       オフセット 仮想Addr   物理Addr   FileSiz MemSiz  Flg Align
+  LOAD           0x001000 0x00300000 0x00300000 0x00048 0x00048 RW  0x1000
+  LOAD           0x002000 0x00400000 0x00400000 0x00484 0x00484 R E 0x1000
+
+ セグメントマッピングへのセクション:
+  セグメントセクション...
+   00     .tohost 
+   01     .text.init 
+
+このファイルには動的セクションがありません。
+
+このファイルには再配置されるものがありません。
+
+The decoding of unwind sections for machine type RISC-V is not currently supported.
+
+Symbol table '.symtab' contains 43 entries:
+  番号:      値 サイズ タイプ  Bind   Vis      索引名
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00400000     0 SECTION LOCAL  DEFAULT    1 
+     2: 00300000     0 SECTION LOCAL  DEFAULT    2 
+     3: 00000000     0 SECTION LOCAL  DEFAULT    3 
+     4: 00000000     0 SECTION LOCAL  DEFAULT    4 
+     5: 00000000     0 SECTION LOCAL  DEFAULT    5 
+     6: 00000000     0 SECTION LOCAL  DEFAULT    6 
+     7: 00000000     0 SECTION LOCAL  DEFAULT    7 
+     8: 00000000     0 SECTION LOCAL  DEFAULT    8 
+     9: 00000000     0 SECTION LOCAL  DEFAULT    9 
+    10: 00000000     0 FILE    LOCAL  DEFAULT  ABS ccRBdUxk.o
+    11: 0040004c     0 NOTYPE  LOCAL  DEFAULT    1 reset_vector
+    12: 00400004     0 NOTYPE  LOCAL  DEFAULT    1 trap_vector
+    13: 00400040     0 NOTYPE  LOCAL  DEFAULT    1 write_tohost
+    14: 0040003c     0 NOTYPE  LOCAL  DEFAULT    1 handle_exception
+    15: 0040003c     0 NOTYPE  LOCAL  DEFAULT    1 other_exception
+    16: 0040018c     0 NOTYPE  LOCAL  DEFAULT    1 test_2
+    17: 0040041c     0 NOTYPE  LOCAL  DEFAULT    1 fail
+    18: 004001a8     0 NOTYPE  LOCAL  DEFAULT    1 test_3
+    19: 004001b8     0 NOTYPE  LOCAL  DEFAULT    1 test_4
+    20: 004001c8     0 NOTYPE  LOCAL  DEFAULT    1 test_5
+    21: 004001d8     0 NOTYPE  LOCAL  DEFAULT    1 test_6
+    22: 004001e8     0 NOTYPE  LOCAL  DEFAULT    1 test_7
+    23: 004001f8     0 NOTYPE  LOCAL  DEFAULT    1 test_8
+    24: 00400208     0 NOTYPE  LOCAL  DEFAULT    1 test_10
+    25: 00400234     0 NOTYPE  LOCAL  DEFAULT    1 test_11
+    26: 00400260     0 NOTYPE  LOCAL  DEFAULT    1 test_12
+    27: 0040028c     0 NOTYPE  LOCAL  DEFAULT    1 test_13
+    28: 004002b8     0 NOTYPE  LOCAL  DEFAULT    1 test_20
+    29: 004002e4     0 NOTYPE  LOCAL  DEFAULT    1 test_21
+    30: 00400310     0 NOTYPE  LOCAL  DEFAULT    1 test_22
+    31: 0040033c     0 NOTYPE  LOCAL  DEFAULT    1 test_23
+    32: 00400368     0 NOTYPE  LOCAL  DEFAULT    1 test_30
+    33: 00400394     0 NOTYPE  LOCAL  DEFAULT    1 test_31
+    34: 004003c0     0 NOTYPE  LOCAL  DEFAULT    1 test_32
+    35: 004003ec     0 NOTYPE  LOCAL  DEFAULT    1 test_33
+    36: 00400440     0 NOTYPE  LOCAL  DEFAULT    1 pass
+    37: 00400490     0 NOTYPE  GLOBAL DEFAULT    2 end_signature
+    38: 00400490     0 NOTYPE  GLOBAL DEFAULT    2 begin_signature
+    39: 00400000     0 NOTYPE  GLOBAL DEFAULT    1 _start
+    40: 00301000     0 NOTYPE  GLOBAL DEFAULT    2 _end
+    41: 00300040     0 NOTYPE  GLOBAL DEFAULT    2 fromhost
+    42: 00300000     0 NOTYPE  GLOBAL DEFAULT    2 tohost
+
+このファイルからはバージョン情報が見つかりません。
+Attribute Section: riscv
+ファイル属性
+  Tag_RISCV_arch: "rv32i2p0_f2p0"
+  Tag_RISCV_priv_spec: 1
+  Tag_RISCV_priv_spec_minor: 11

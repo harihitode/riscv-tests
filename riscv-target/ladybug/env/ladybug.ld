@@ -9,10 +9,9 @@ MEMORY {
 SECTIONS
 {
   .lspm : { *(.lsmp) } > lspm
-  .tohost : { *(.tohost) } > mmio
-  . = ALIGN(0x1000);
   .text.init : { *(.text.init) } > cram
   . = ALIGN(0x1000);
+  .tohost : { *(.tohost) } > mmio
   .text : { *(.text) } > cram
   . = ALIGN(0x1000);
   .data : { *(.data) } > cram

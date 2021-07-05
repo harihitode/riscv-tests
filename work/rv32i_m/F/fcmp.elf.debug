@@ -1,5 +1,5 @@
 
-/home/hamada/risc-v_git/riscv-tests/work/rv32i_m/F/fcmp.elf:     ファイル形式 elf32-littleriscv
+/home/hamada/risc-v_git/riscv-tests_C/riscv-tests/work/rv32i_m/F/fcmp.elf:     ファイル形式 elf32-littleriscv
 
 
 セクション .text.init の逆アセンブル:
@@ -79,7 +79,7 @@ RVTEST_CODE_BEGIN
   4000e4:	02028293          	addi	t0,t0,32 # 400100 <reset_vector+0xb4>
   4000e8:	30529073          	csrw	mtvec,t0
   4000ec:	800002b7          	lui	t0,0x80000
-  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbff8cf>
+  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffa3f>
   4000f4:	3b029073          	csrw	pmpaddr0,t0
   4000f8:	01f00293          	li	t0,31
   4000fc:	3a029073          	csrw	pmpcfg0,t0
@@ -95,327 +95,287 @@ RVTEST_CODE_BEGIN
   400124:	30529073          	csrw	mtvec,t0
   400128:	00100513          	li	a0,1
   40012c:	01f51513          	slli	a0,a0,0x1f
-  400130:	00054c63          	bltz	a0,400148 <reset_vector+0xfc>
+  400130:	00054e63          	bltz	a0,40014c <reset_vector+0x100>
   400134:	0ff0000f          	fence
   400138:	00100193          	li	gp,1
   40013c:	05d00893          	li	a7,93
   400140:	00000513          	li	a0,0
-  400144:	00000073          	ecall
-  400148:	ffc00297          	auipc	t0,0xffc00
-  40014c:	eb828293          	addi	t0,t0,-328 # 0 <tohost-0x300000>
-  400150:	00028a63          	beqz	t0,400164 <reset_vector+0x118>
-  400154:	10529073          	csrw	stvec,t0
-  400158:	0000b2b7          	lui	t0,0xb
-  40015c:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
-  400160:	30229073          	csrw	medeleg,t0
-  400164:	30005073          	csrwi	mstatus,0
-  400168:	00002537          	lui	a0,0x2
-  40016c:	30052073          	csrs	mstatus,a0
-  400170:	00305073          	csrwi	fcsr,0
-  400174:	00000297          	auipc	t0,0x0
-  400178:	01428293          	addi	t0,t0,20 # 400188 <test_2>
-  40017c:	34129073          	csrw	mepc,t0
-  400180:	f1402573          	csrr	a0,mhartid
-  400184:	30200073          	mret
+  400144:	cda2d073          	csrwi	0xcda,5
+  400148:	00000073          	ecall
+  40014c:	ffc00297          	auipc	t0,0xffc00
+  400150:	eb428293          	addi	t0,t0,-332 # 0 <tohost-0x300000>
+  400154:	00028a63          	beqz	t0,400168 <reset_vector+0x11c>
+  400158:	10529073          	csrw	stvec,t0
+  40015c:	0000b2b7          	lui	t0,0xb
+  400160:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
+  400164:	30229073          	csrw	medeleg,t0
+  400168:	30005073          	csrwi	mstatus,0
+  40016c:	00002537          	lui	a0,0x2
+  400170:	30052073          	csrs	mstatus,a0
+  400174:	00305073          	csrwi	fcsr,0
+  400178:	00000297          	auipc	t0,0x0
+  40017c:	01428293          	addi	t0,t0,20 # 40018c <test_2>
+  400180:	34129073          	csrw	mepc,t0
+  400184:	f1402573          	csrr	a0,mhartid
+  400188:	30200073          	mret
 
-00400188 <test_2>:
-    # Replace the function with the 32-bit variant defined in test_macros.h
-    #undef TEST_FP_CMP_OP_D
-    #define TEST_FP_CMP_OP_D TEST_FP_CMP_OP_D32
-#endif
+0040018c <test_2>:
 
-  TEST_FP_CMP_OP_D( 2, feq.d, 0x00, 1, -1.36, -1.36)
-  400188:	00200193          	li	gp,2
-  40018c:	00000517          	auipc	a0,0x0
-  400190:	3c450513          	addi	a0,a0,964 # 400550 <test_2_data>
-  400194:	00053007          	fld	ft0,0(a0)
-  400198:	00853087          	fld	ft1,8(a0)
-  40019c:	01053107          	fld	ft2,16(a0)
-  4001a0:	01852683          	lw	a3,24(a0)
-  4001a4:	01c52303          	lw	t1,28(a0)
-  4001a8:	a2102553          	feq.d	a0,ft0,ft1
-  4001ac:	00000393          	li	t2,0
-  4001b0:	001015f3          	fsflags	a1,zero
-  4001b4:	00000613          	li	a2,0
-  4001b8:	34d51c63          	bne	a0,a3,400510 <fail>
-  4001bc:	34731a63          	bne	t1,t2,400510 <fail>
-  4001c0:	34c59863          	bne	a1,a2,400510 <fail>
+  #-------------------------------------------------------------
+  # Arithmetic tests
+  #-------------------------------------------------------------
 
-004001c4 <test_3>:
-  TEST_FP_CMP_OP_D( 3, fle.d, 0x00, 1, -1.36, -1.36)
-  4001c4:	00300193          	li	gp,3
-  4001c8:	00000517          	auipc	a0,0x0
-  4001cc:	3a850513          	addi	a0,a0,936 # 400570 <test_3_data>
-  4001d0:	00053007          	fld	ft0,0(a0)
-  4001d4:	00853087          	fld	ft1,8(a0)
-  4001d8:	01053107          	fld	ft2,16(a0)
-  4001dc:	01852683          	lw	a3,24(a0)
-  4001e0:	01c52303          	lw	t1,28(a0)
-  4001e4:	a2100553          	fle.d	a0,ft0,ft1
-  4001e8:	00000393          	li	t2,0
-  4001ec:	001015f3          	fsflags	a1,zero
-  4001f0:	00000613          	li	a2,0
-  4001f4:	30d51e63          	bne	a0,a3,400510 <fail>
-  4001f8:	30731c63          	bne	t1,t2,400510 <fail>
-  4001fc:	30c59a63          	bne	a1,a2,400510 <fail>
+  TEST_FP_CMP_OP_S( 2, feq.s, 0x00, 1, -1.36, -1.36)
+  40018c:	00200193          	li	gp,2
+  400190:	00000517          	auipc	a0,0x0
+  400194:	34050513          	addi	a0,a0,832 # 4004d0 <test_2_data>
+  400198:	00052007          	flw	ft0,0(a0)
+  40019c:	00452087          	flw	ft1,4(a0)
+  4001a0:	00852107          	flw	ft2,8(a0)
+  4001a4:	00c52683          	lw	a3,12(a0)
+  4001a8:	a0102553          	feq.s	a0,ft0,ft1
+  4001ac:	001015f3          	fsflags	a1,zero
+  4001b0:	00000613          	li	a2,0
+  4001b4:	2ad51663          	bne	a0,a3,400460 <fail>
+  4001b8:	2ac59463          	bne	a1,a2,400460 <fail>
 
-00400200 <test_4>:
-  TEST_FP_CMP_OP_D( 4, flt.d, 0x00, 0, -1.36, -1.36)
-  400200:	00400193          	li	gp,4
-  400204:	00000517          	auipc	a0,0x0
-  400208:	38c50513          	addi	a0,a0,908 # 400590 <test_4_data>
-  40020c:	00053007          	fld	ft0,0(a0)
-  400210:	00853087          	fld	ft1,8(a0)
-  400214:	01053107          	fld	ft2,16(a0)
-  400218:	01852683          	lw	a3,24(a0)
-  40021c:	01c52303          	lw	t1,28(a0)
-  400220:	a2101553          	flt.d	a0,ft0,ft1
-  400224:	00000393          	li	t2,0
-  400228:	001015f3          	fsflags	a1,zero
-  40022c:	00000613          	li	a2,0
-  400230:	2ed51063          	bne	a0,a3,400510 <fail>
-  400234:	2c731e63          	bne	t1,t2,400510 <fail>
-  400238:	2cc59c63          	bne	a1,a2,400510 <fail>
+004001bc <test_3>:
+  TEST_FP_CMP_OP_S( 3, fle.s, 0x00, 1, -1.36, -1.36)
+  4001bc:	00300193          	li	gp,3
+  4001c0:	00000517          	auipc	a0,0x0
+  4001c4:	32050513          	addi	a0,a0,800 # 4004e0 <test_3_data>
+  4001c8:	00052007          	flw	ft0,0(a0)
+  4001cc:	00452087          	flw	ft1,4(a0)
+  4001d0:	00852107          	flw	ft2,8(a0)
+  4001d4:	00c52683          	lw	a3,12(a0)
+  4001d8:	a0100553          	fle.s	a0,ft0,ft1
+  4001dc:	001015f3          	fsflags	a1,zero
+  4001e0:	00000613          	li	a2,0
+  4001e4:	26d51e63          	bne	a0,a3,400460 <fail>
+  4001e8:	26c59c63          	bne	a1,a2,400460 <fail>
 
-0040023c <test_5>:
+004001ec <test_4>:
+  TEST_FP_CMP_OP_S( 4, flt.s, 0x00, 0, -1.36, -1.36)
+  4001ec:	00400193          	li	gp,4
+  4001f0:	00000517          	auipc	a0,0x0
+  4001f4:	30050513          	addi	a0,a0,768 # 4004f0 <test_4_data>
+  4001f8:	00052007          	flw	ft0,0(a0)
+  4001fc:	00452087          	flw	ft1,4(a0)
+  400200:	00852107          	flw	ft2,8(a0)
+  400204:	00c52683          	lw	a3,12(a0)
+  400208:	a0101553          	flt.s	a0,ft0,ft1
+  40020c:	001015f3          	fsflags	a1,zero
+  400210:	00000613          	li	a2,0
+  400214:	24d51663          	bne	a0,a3,400460 <fail>
+  400218:	24c59463          	bne	a1,a2,400460 <fail>
 
-  TEST_FP_CMP_OP_D( 5, feq.d, 0x00, 0, -1.37, -1.36)
-  40023c:	00500193          	li	gp,5
-  400240:	00000517          	auipc	a0,0x0
-  400244:	37050513          	addi	a0,a0,880 # 4005b0 <test_5_data>
-  400248:	00053007          	fld	ft0,0(a0)
-  40024c:	00853087          	fld	ft1,8(a0)
-  400250:	01053107          	fld	ft2,16(a0)
-  400254:	01852683          	lw	a3,24(a0)
-  400258:	01c52303          	lw	t1,28(a0)
-  40025c:	a2102553          	feq.d	a0,ft0,ft1
-  400260:	00000393          	li	t2,0
-  400264:	001015f3          	fsflags	a1,zero
-  400268:	00000613          	li	a2,0
-  40026c:	2ad51263          	bne	a0,a3,400510 <fail>
-  400270:	2a731063          	bne	t1,t2,400510 <fail>
-  400274:	28c59e63          	bne	a1,a2,400510 <fail>
+0040021c <test_5>:
 
-00400278 <test_6>:
-  TEST_FP_CMP_OP_D( 6, fle.d, 0x00, 1, -1.37, -1.36)
-  400278:	00600193          	li	gp,6
-  40027c:	00000517          	auipc	a0,0x0
-  400280:	35450513          	addi	a0,a0,852 # 4005d0 <test_6_data>
-  400284:	00053007          	fld	ft0,0(a0)
-  400288:	00853087          	fld	ft1,8(a0)
-  40028c:	01053107          	fld	ft2,16(a0)
-  400290:	01852683          	lw	a3,24(a0)
-  400294:	01c52303          	lw	t1,28(a0)
-  400298:	a2100553          	fle.d	a0,ft0,ft1
-  40029c:	00000393          	li	t2,0
-  4002a0:	001015f3          	fsflags	a1,zero
-  4002a4:	00000613          	li	a2,0
-  4002a8:	26d51463          	bne	a0,a3,400510 <fail>
-  4002ac:	26731263          	bne	t1,t2,400510 <fail>
-  4002b0:	26c59063          	bne	a1,a2,400510 <fail>
+  TEST_FP_CMP_OP_S( 5, feq.s, 0x00, 0, -1.37, -1.36)
+  40021c:	00500193          	li	gp,5
+  400220:	00000517          	auipc	a0,0x0
+  400224:	2e050513          	addi	a0,a0,736 # 400500 <test_5_data>
+  400228:	00052007          	flw	ft0,0(a0)
+  40022c:	00452087          	flw	ft1,4(a0)
+  400230:	00852107          	flw	ft2,8(a0)
+  400234:	00c52683          	lw	a3,12(a0)
+  400238:	a0102553          	feq.s	a0,ft0,ft1
+  40023c:	001015f3          	fsflags	a1,zero
+  400240:	00000613          	li	a2,0
+  400244:	20d51e63          	bne	a0,a3,400460 <fail>
+  400248:	20c59c63          	bne	a1,a2,400460 <fail>
 
-004002b4 <test_7>:
-  TEST_FP_CMP_OP_D( 7, flt.d, 0x00, 1, -1.37, -1.36)
-  4002b4:	00700193          	li	gp,7
-  4002b8:	00000517          	auipc	a0,0x0
-  4002bc:	33850513          	addi	a0,a0,824 # 4005f0 <test_7_data>
-  4002c0:	00053007          	fld	ft0,0(a0)
-  4002c4:	00853087          	fld	ft1,8(a0)
-  4002c8:	01053107          	fld	ft2,16(a0)
-  4002cc:	01852683          	lw	a3,24(a0)
-  4002d0:	01c52303          	lw	t1,28(a0)
-  4002d4:	a2101553          	flt.d	a0,ft0,ft1
-  4002d8:	00000393          	li	t2,0
-  4002dc:	001015f3          	fsflags	a1,zero
-  4002e0:	00000613          	li	a2,0
-  4002e4:	22d51663          	bne	a0,a3,400510 <fail>
-  4002e8:	22731463          	bne	t1,t2,400510 <fail>
-  4002ec:	22c59263          	bne	a1,a2,400510 <fail>
+0040024c <test_6>:
+  TEST_FP_CMP_OP_S( 6, fle.s, 0x00, 1, -1.37, -1.36)
+  40024c:	00600193          	li	gp,6
+  400250:	00000517          	auipc	a0,0x0
+  400254:	2c050513          	addi	a0,a0,704 # 400510 <test_6_data>
+  400258:	00052007          	flw	ft0,0(a0)
+  40025c:	00452087          	flw	ft1,4(a0)
+  400260:	00852107          	flw	ft2,8(a0)
+  400264:	00c52683          	lw	a3,12(a0)
+  400268:	a0100553          	fle.s	a0,ft0,ft1
+  40026c:	001015f3          	fsflags	a1,zero
+  400270:	00000613          	li	a2,0
+  400274:	1ed51663          	bne	a0,a3,400460 <fail>
+  400278:	1ec59463          	bne	a1,a2,400460 <fail>
 
-004002f0 <test_8>:
+0040027c <test_7>:
+  TEST_FP_CMP_OP_S( 7, flt.s, 0x00, 1, -1.37, -1.36)
+  40027c:	00700193          	li	gp,7
+  400280:	00000517          	auipc	a0,0x0
+  400284:	2a050513          	addi	a0,a0,672 # 400520 <test_7_data>
+  400288:	00052007          	flw	ft0,0(a0)
+  40028c:	00452087          	flw	ft1,4(a0)
+  400290:	00852107          	flw	ft2,8(a0)
+  400294:	00c52683          	lw	a3,12(a0)
+  400298:	a0101553          	flt.s	a0,ft0,ft1
+  40029c:	001015f3          	fsflags	a1,zero
+  4002a0:	00000613          	li	a2,0
+  4002a4:	1ad51e63          	bne	a0,a3,400460 <fail>
+  4002a8:	1ac59c63          	bne	a1,a2,400460 <fail>
+
+004002ac <test_8>:
 
   # Only sNaN should signal invalid for feq.
-  TEST_FP_CMP_OP_D( 8, feq.d, 0x00, 0, NaN, 0)
-  4002f0:	00800193          	li	gp,8
-  4002f4:	00000517          	auipc	a0,0x0
-  4002f8:	31c50513          	addi	a0,a0,796 # 400610 <test_8_data>
-  4002fc:	00053007          	fld	ft0,0(a0)
-  400300:	00853087          	fld	ft1,8(a0)
-  400304:	01053107          	fld	ft2,16(a0)
-  400308:	01852683          	lw	a3,24(a0)
-  40030c:	01c52303          	lw	t1,28(a0)
-  400310:	a2102553          	feq.d	a0,ft0,ft1
-  400314:	00000393          	li	t2,0
-  400318:	001015f3          	fsflags	a1,zero
-  40031c:	00000613          	li	a2,0
-  400320:	1ed51863          	bne	a0,a3,400510 <fail>
-  400324:	1e731663          	bne	t1,t2,400510 <fail>
-  400328:	1ec59463          	bne	a1,a2,400510 <fail>
+  TEST_FP_CMP_OP_S( 8, feq.s, 0x00, 0, NaN, 0)
+  4002ac:	00800193          	li	gp,8
+  4002b0:	00000517          	auipc	a0,0x0
+  4002b4:	28050513          	addi	a0,a0,640 # 400530 <test_8_data>
+  4002b8:	00052007          	flw	ft0,0(a0)
+  4002bc:	00452087          	flw	ft1,4(a0)
+  4002c0:	00852107          	flw	ft2,8(a0)
+  4002c4:	00c52683          	lw	a3,12(a0)
+  4002c8:	a0102553          	feq.s	a0,ft0,ft1
+  4002cc:	001015f3          	fsflags	a1,zero
+  4002d0:	00000613          	li	a2,0
+  4002d4:	18d51663          	bne	a0,a3,400460 <fail>
+  4002d8:	18c59463          	bne	a1,a2,400460 <fail>
 
-0040032c <test_9>:
-  TEST_FP_CMP_OP_D( 9, feq.d, 0x00, 0, NaN, NaN)
-  40032c:	00900193          	li	gp,9
-  400330:	00000517          	auipc	a0,0x0
-  400334:	30050513          	addi	a0,a0,768 # 400630 <test_9_data>
-  400338:	00053007          	fld	ft0,0(a0)
-  40033c:	00853087          	fld	ft1,8(a0)
-  400340:	01053107          	fld	ft2,16(a0)
-  400344:	01852683          	lw	a3,24(a0)
-  400348:	01c52303          	lw	t1,28(a0)
-  40034c:	a2102553          	feq.d	a0,ft0,ft1
-  400350:	00000393          	li	t2,0
-  400354:	001015f3          	fsflags	a1,zero
-  400358:	00000613          	li	a2,0
-  40035c:	1ad51a63          	bne	a0,a3,400510 <fail>
-  400360:	1a731863          	bne	t1,t2,400510 <fail>
-  400364:	1ac59663          	bne	a1,a2,400510 <fail>
+004002dc <test_9>:
+  TEST_FP_CMP_OP_S( 9, feq.s, 0x00, 0, NaN, NaN)
+  4002dc:	00900193          	li	gp,9
+  4002e0:	00000517          	auipc	a0,0x0
+  4002e4:	26050513          	addi	a0,a0,608 # 400540 <test_9_data>
+  4002e8:	00052007          	flw	ft0,0(a0)
+  4002ec:	00452087          	flw	ft1,4(a0)
+  4002f0:	00852107          	flw	ft2,8(a0)
+  4002f4:	00c52683          	lw	a3,12(a0)
+  4002f8:	a0102553          	feq.s	a0,ft0,ft1
+  4002fc:	001015f3          	fsflags	a1,zero
+  400300:	00000613          	li	a2,0
+  400304:	14d51e63          	bne	a0,a3,400460 <fail>
+  400308:	14c59c63          	bne	a1,a2,400460 <fail>
 
-00400368 <test_10>:
-  TEST_FP_CMP_OP_D(10, feq.d, 0x10, 0, sNaN, 0)
-  400368:	00a00193          	li	gp,10
-  40036c:	00000517          	auipc	a0,0x0
-  400370:	2e450513          	addi	a0,a0,740 # 400650 <test_10_data>
-  400374:	00053007          	fld	ft0,0(a0)
-  400378:	00853087          	fld	ft1,8(a0)
-  40037c:	01053107          	fld	ft2,16(a0)
-  400380:	01852683          	lw	a3,24(a0)
-  400384:	01c52303          	lw	t1,28(a0)
-  400388:	a2102553          	feq.d	a0,ft0,ft1
-  40038c:	00000393          	li	t2,0
-  400390:	001015f3          	fsflags	a1,zero
-  400394:	01000613          	li	a2,16
-  400398:	16d51c63          	bne	a0,a3,400510 <fail>
-  40039c:	16731a63          	bne	t1,t2,400510 <fail>
-  4003a0:	16c59863          	bne	a1,a2,400510 <fail>
+0040030c <test_10>:
+  TEST_FP_CMP_OP_S(10, feq.s, 0x10, 0, sNaNf, 0)
+  40030c:	00a00193          	li	gp,10
+  400310:	00000517          	auipc	a0,0x0
+  400314:	24050513          	addi	a0,a0,576 # 400550 <test_10_data>
+  400318:	00052007          	flw	ft0,0(a0)
+  40031c:	00452087          	flw	ft1,4(a0)
+  400320:	00852107          	flw	ft2,8(a0)
+  400324:	00c52683          	lw	a3,12(a0)
+  400328:	a0102553          	feq.s	a0,ft0,ft1
+  40032c:	001015f3          	fsflags	a1,zero
+  400330:	01000613          	li	a2,16
+  400334:	12d51663          	bne	a0,a3,400460 <fail>
+  400338:	12c59463          	bne	a1,a2,400460 <fail>
 
-004003a4 <test_11>:
+0040033c <test_11>:
 
   # qNaN should signal invalid for fle/flt.
-  TEST_FP_CMP_OP_D(11, flt.d, 0x10, 0, NaN, 0)
-  4003a4:	00b00193          	li	gp,11
-  4003a8:	00000517          	auipc	a0,0x0
-  4003ac:	2c850513          	addi	a0,a0,712 # 400670 <test_11_data>
-  4003b0:	00053007          	fld	ft0,0(a0)
-  4003b4:	00853087          	fld	ft1,8(a0)
-  4003b8:	01053107          	fld	ft2,16(a0)
-  4003bc:	01852683          	lw	a3,24(a0)
-  4003c0:	01c52303          	lw	t1,28(a0)
-  4003c4:	a2101553          	flt.d	a0,ft0,ft1
-  4003c8:	00000393          	li	t2,0
-  4003cc:	001015f3          	fsflags	a1,zero
-  4003d0:	01000613          	li	a2,16
-  4003d4:	12d51e63          	bne	a0,a3,400510 <fail>
-  4003d8:	12731c63          	bne	t1,t2,400510 <fail>
-  4003dc:	12c59a63          	bne	a1,a2,400510 <fail>
+  TEST_FP_CMP_OP_S(11, flt.s, 0x10, 0, NaN, 0)
+  40033c:	00b00193          	li	gp,11
+  400340:	00000517          	auipc	a0,0x0
+  400344:	22050513          	addi	a0,a0,544 # 400560 <test_11_data>
+  400348:	00052007          	flw	ft0,0(a0)
+  40034c:	00452087          	flw	ft1,4(a0)
+  400350:	00852107          	flw	ft2,8(a0)
+  400354:	00c52683          	lw	a3,12(a0)
+  400358:	a0101553          	flt.s	a0,ft0,ft1
+  40035c:	001015f3          	fsflags	a1,zero
+  400360:	01000613          	li	a2,16
+  400364:	0ed51e63          	bne	a0,a3,400460 <fail>
+  400368:	0ec59c63          	bne	a1,a2,400460 <fail>
 
-004003e0 <test_12>:
-  TEST_FP_CMP_OP_D(12, flt.d, 0x10, 0, NaN, NaN)
-  4003e0:	00c00193          	li	gp,12
-  4003e4:	00000517          	auipc	a0,0x0
-  4003e8:	2ac50513          	addi	a0,a0,684 # 400690 <test_12_data>
-  4003ec:	00053007          	fld	ft0,0(a0)
-  4003f0:	00853087          	fld	ft1,8(a0)
-  4003f4:	01053107          	fld	ft2,16(a0)
-  4003f8:	01852683          	lw	a3,24(a0)
-  4003fc:	01c52303          	lw	t1,28(a0)
-  400400:	a2101553          	flt.d	a0,ft0,ft1
-  400404:	00000393          	li	t2,0
-  400408:	001015f3          	fsflags	a1,zero
-  40040c:	01000613          	li	a2,16
-  400410:	10d51063          	bne	a0,a3,400510 <fail>
-  400414:	0e731e63          	bne	t1,t2,400510 <fail>
-  400418:	0ec59c63          	bne	a1,a2,400510 <fail>
+0040036c <test_12>:
+  TEST_FP_CMP_OP_S(12, flt.s, 0x10, 0, NaN, NaN)
+  40036c:	00c00193          	li	gp,12
+  400370:	00000517          	auipc	a0,0x0
+  400374:	20050513          	addi	a0,a0,512 # 400570 <test_12_data>
+  400378:	00052007          	flw	ft0,0(a0)
+  40037c:	00452087          	flw	ft1,4(a0)
+  400380:	00852107          	flw	ft2,8(a0)
+  400384:	00c52683          	lw	a3,12(a0)
+  400388:	a0101553          	flt.s	a0,ft0,ft1
+  40038c:	001015f3          	fsflags	a1,zero
+  400390:	01000613          	li	a2,16
+  400394:	0cd51663          	bne	a0,a3,400460 <fail>
+  400398:	0cc59463          	bne	a1,a2,400460 <fail>
 
-0040041c <test_13>:
-  TEST_FP_CMP_OP_D(13, flt.d, 0x10, 0, sNaN, 0)
-  40041c:	00d00193          	li	gp,13
-  400420:	00000517          	auipc	a0,0x0
-  400424:	29050513          	addi	a0,a0,656 # 4006b0 <test_13_data>
-  400428:	00053007          	fld	ft0,0(a0)
-  40042c:	00853087          	fld	ft1,8(a0)
-  400430:	01053107          	fld	ft2,16(a0)
-  400434:	01852683          	lw	a3,24(a0)
-  400438:	01c52303          	lw	t1,28(a0)
-  40043c:	a2101553          	flt.d	a0,ft0,ft1
-  400440:	00000393          	li	t2,0
-  400444:	001015f3          	fsflags	a1,zero
-  400448:	01000613          	li	a2,16
-  40044c:	0cd51263          	bne	a0,a3,400510 <fail>
-  400450:	0c731063          	bne	t1,t2,400510 <fail>
-  400454:	0ac59e63          	bne	a1,a2,400510 <fail>
+0040039c <test_13>:
+  TEST_FP_CMP_OP_S(13, flt.s, 0x10, 0, sNaNf, 0)
+  40039c:	00d00193          	li	gp,13
+  4003a0:	00000517          	auipc	a0,0x0
+  4003a4:	1e050513          	addi	a0,a0,480 # 400580 <test_13_data>
+  4003a8:	00052007          	flw	ft0,0(a0)
+  4003ac:	00452087          	flw	ft1,4(a0)
+  4003b0:	00852107          	flw	ft2,8(a0)
+  4003b4:	00c52683          	lw	a3,12(a0)
+  4003b8:	a0101553          	flt.s	a0,ft0,ft1
+  4003bc:	001015f3          	fsflags	a1,zero
+  4003c0:	01000613          	li	a2,16
+  4003c4:	08d51e63          	bne	a0,a3,400460 <fail>
+  4003c8:	08c59c63          	bne	a1,a2,400460 <fail>
 
-00400458 <test_14>:
-  TEST_FP_CMP_OP_D(14, fle.d, 0x10, 0, NaN, 0)
-  400458:	00e00193          	li	gp,14
-  40045c:	00000517          	auipc	a0,0x0
-  400460:	27450513          	addi	a0,a0,628 # 4006d0 <test_14_data>
-  400464:	00053007          	fld	ft0,0(a0)
-  400468:	00853087          	fld	ft1,8(a0)
-  40046c:	01053107          	fld	ft2,16(a0)
-  400470:	01852683          	lw	a3,24(a0)
-  400474:	01c52303          	lw	t1,28(a0)
-  400478:	a2100553          	fle.d	a0,ft0,ft1
-  40047c:	00000393          	li	t2,0
-  400480:	001015f3          	fsflags	a1,zero
-  400484:	01000613          	li	a2,16
-  400488:	08d51463          	bne	a0,a3,400510 <fail>
-  40048c:	08731263          	bne	t1,t2,400510 <fail>
-  400490:	08c59063          	bne	a1,a2,400510 <fail>
+004003cc <test_14>:
+  TEST_FP_CMP_OP_S(14, fle.s, 0x10, 0, NaN, 0)
+  4003cc:	00e00193          	li	gp,14
+  4003d0:	00000517          	auipc	a0,0x0
+  4003d4:	1c050513          	addi	a0,a0,448 # 400590 <test_14_data>
+  4003d8:	00052007          	flw	ft0,0(a0)
+  4003dc:	00452087          	flw	ft1,4(a0)
+  4003e0:	00852107          	flw	ft2,8(a0)
+  4003e4:	00c52683          	lw	a3,12(a0)
+  4003e8:	a0100553          	fle.s	a0,ft0,ft1
+  4003ec:	001015f3          	fsflags	a1,zero
+  4003f0:	01000613          	li	a2,16
+  4003f4:	06d51663          	bne	a0,a3,400460 <fail>
+  4003f8:	06c59463          	bne	a1,a2,400460 <fail>
 
-00400494 <test_15>:
-  TEST_FP_CMP_OP_D(15, fle.d, 0x10, 0, NaN, NaN)
-  400494:	00f00193          	li	gp,15
-  400498:	00000517          	auipc	a0,0x0
-  40049c:	25850513          	addi	a0,a0,600 # 4006f0 <test_15_data>
-  4004a0:	00053007          	fld	ft0,0(a0)
-  4004a4:	00853087          	fld	ft1,8(a0)
-  4004a8:	01053107          	fld	ft2,16(a0)
-  4004ac:	01852683          	lw	a3,24(a0)
-  4004b0:	01c52303          	lw	t1,28(a0)
-  4004b4:	a2100553          	fle.d	a0,ft0,ft1
-  4004b8:	00000393          	li	t2,0
-  4004bc:	001015f3          	fsflags	a1,zero
-  4004c0:	01000613          	li	a2,16
-  4004c4:	04d51663          	bne	a0,a3,400510 <fail>
-  4004c8:	04731463          	bne	t1,t2,400510 <fail>
-  4004cc:	04c59263          	bne	a1,a2,400510 <fail>
+004003fc <test_15>:
+  TEST_FP_CMP_OP_S(15, fle.s, 0x10, 0, NaN, NaN)
+  4003fc:	00f00193          	li	gp,15
+  400400:	00000517          	auipc	a0,0x0
+  400404:	1a050513          	addi	a0,a0,416 # 4005a0 <test_15_data>
+  400408:	00052007          	flw	ft0,0(a0)
+  40040c:	00452087          	flw	ft1,4(a0)
+  400410:	00852107          	flw	ft2,8(a0)
+  400414:	00c52683          	lw	a3,12(a0)
+  400418:	a0100553          	fle.s	a0,ft0,ft1
+  40041c:	001015f3          	fsflags	a1,zero
+  400420:	01000613          	li	a2,16
+  400424:	02d51e63          	bne	a0,a3,400460 <fail>
+  400428:	02c59c63          	bne	a1,a2,400460 <fail>
 
-004004d0 <test_16>:
-  TEST_FP_CMP_OP_D(16, fle.d, 0x10, 0, sNaN, 0)
-  4004d0:	01000193          	li	gp,16
-  4004d4:	00000517          	auipc	a0,0x0
-  4004d8:	23c50513          	addi	a0,a0,572 # 400710 <test_16_data>
-  4004dc:	00053007          	fld	ft0,0(a0)
-  4004e0:	00853087          	fld	ft1,8(a0)
-  4004e4:	01053107          	fld	ft2,16(a0)
-  4004e8:	01852683          	lw	a3,24(a0)
-  4004ec:	01c52303          	lw	t1,28(a0)
-  4004f0:	a2100553          	fle.d	a0,ft0,ft1
-  4004f4:	00000393          	li	t2,0
-  4004f8:	001015f3          	fsflags	a1,zero
-  4004fc:	01000613          	li	a2,16
-  400500:	00d51863          	bne	a0,a3,400510 <fail>
-  400504:	00731663          	bne	t1,t2,400510 <fail>
-  400508:	00c59463          	bne	a1,a2,400510 <fail>
+0040042c <test_16>:
+  TEST_FP_CMP_OP_S(16, fle.s, 0x10, 0, sNaNf, 0)
+  40042c:	01000193          	li	gp,16
+  400430:	00000517          	auipc	a0,0x0
+  400434:	18050513          	addi	a0,a0,384 # 4005b0 <test_16_data>
+  400438:	00052007          	flw	ft0,0(a0)
+  40043c:	00452087          	flw	ft1,4(a0)
+  400440:	00852107          	flw	ft2,8(a0)
+  400444:	00c52683          	lw	a3,12(a0)
+  400448:	a0100553          	fle.s	a0,ft0,ft1
+  40044c:	001015f3          	fsflags	a1,zero
+  400450:	01000613          	li	a2,16
+  400454:	00d51663          	bne	a0,a3,400460 <fail>
+  400458:	00c59463          	bne	a1,a2,400460 <fail>
 
   TEST_PASSFAIL
-  40050c:	02301063          	bne	zero,gp,40052c <pass>
+  40045c:	02301463          	bne	zero,gp,400484 <pass>
 
-00400510 <fail>:
-  400510:	0ff0000f          	fence
-  400514:	00018063          	beqz	gp,400514 <fail+0x4>
-  400518:	00119193          	slli	gp,gp,0x1
-  40051c:	0011e193          	ori	gp,gp,1
-  400520:	05d00893          	li	a7,93
-  400524:	00018513          	mv	a0,gp
-  400528:	00000073          	ecall
+00400460 <fail>:
+  400460:	0ff0000f          	fence
+  400464:	00018063          	beqz	gp,400464 <fail+0x4>
+  400468:	00119193          	slli	gp,gp,0x1
+  40046c:	0011e193          	ori	gp,gp,1
+  400470:	05d00893          	li	a7,93
+  400474:	00018513          	mv	a0,gp
+  400478:	cda4d073          	csrwi	0xcda,9
+  40047c:	cd90e073          	csrsi	0xcd9,1
+  400480:	00000073          	ecall
 
-0040052c <pass>:
-  40052c:	0ff0000f          	fence
-  400530:	00100193          	li	gp,1
-  400534:	05d00893          	li	a7,93
-  400538:	00000513          	li	a0,0
-  40053c:	00000073          	ecall
+00400484 <pass>:
+  400484:	0ff0000f          	fence
+  400488:	00100193          	li	gp,1
+  40048c:	05d00893          	li	a7,93
+  400490:	00000513          	li	a0,0
+  400494:	cda2d073          	csrwi	0xcda,5
+  400498:	00000073          	ecall
 
 RVTEST_CODE_END
-  400540:	c0001073          	unimp
+  40049c:	c0001073          	unimp
+	...

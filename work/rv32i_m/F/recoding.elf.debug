@@ -1,5 +1,5 @@
 
-/home/hamada/risc-v_git/riscv-tests/work/rv32i_m/F/recoding.elf:     ファイル形式 elf32-littleriscv
+/home/hamada/risc-v_git/riscv-tests_C/riscv-tests/work/rv32i_m/F/recoding.elf:     ファイル形式 elf32-littleriscv
 
 
 セクション .text.init の逆アセンブル:
@@ -22,7 +22,7 @@ RVTEST_CODE_BEGIN
   400018:	00b00f93          	li	t6,11
   40001c:	03ff0263          	beq	t5,t6,400040 <write_tohost>
   400020:	ffc00f17          	auipc	t5,0xffc00
-  400024:	fe0f0f13          	addi	t5,t5,-32 # 0 <tohost-0x300000>
+  400024:	fe0f0f13          	addi	t5,t5,-32 # 0 <_start-0x400000>
   400028:	000f0463          	beqz	t5,400030 <trap_vector+0x2c>
   40002c:	000f0067          	jr	t5
   400030:	34202f73          	csrr	t5,mcause
@@ -33,8 +33,8 @@ RVTEST_CODE_BEGIN
   40003c:	5391e193          	ori	gp,gp,1337
 
 00400040 <write_tohost>:
-  400040:	fff00f17          	auipc	t5,0xfff00
-  400044:	fc3f2023          	sw	gp,-64(t5) # 300000 <tohost>
+  400040:	00000f17          	auipc	t5,0x0
+  400044:	2c3f2023          	sw	gp,704(t5) # 400300 <tohost>
   400048:	ff9ff06f          	j	400040 <write_tohost>
 
 0040004c <reset_vector>:
@@ -79,7 +79,7 @@ RVTEST_CODE_BEGIN
   4000e4:	02028293          	addi	t0,t0,32 # 400100 <reset_vector+0xb4>
   4000e8:	30529073          	csrw	mtvec,t0
   4000ec:	800002b7          	lui	t0,0x80000
-  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffd0f>
+  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffcb7>
   4000f4:	3b029073          	csrw	pmpaddr0,t0
   4000f8:	01f00293          	li	t0,31
   4000fc:	3a029073          	csrw	pmpcfg0,t0
@@ -95,157 +95,161 @@ RVTEST_CODE_BEGIN
   400124:	30529073          	csrw	mtvec,t0
   400128:	00100513          	li	a0,1
   40012c:	01f51513          	slli	a0,a0,0x1f
-  400130:	00054c63          	bltz	a0,400148 <reset_vector+0xfc>
+  400130:	00054e63          	bltz	a0,40014c <reset_vector+0x100>
   400134:	0ff0000f          	fence
   400138:	00100193          	li	gp,1
   40013c:	05d00893          	li	a7,93
   400140:	00000513          	li	a0,0
-  400144:	00000073          	ecall
-  400148:	ffc00297          	auipc	t0,0xffc00
-  40014c:	eb828293          	addi	t0,t0,-328 # 0 <tohost-0x300000>
-  400150:	00028a63          	beqz	t0,400164 <reset_vector+0x118>
-  400154:	10529073          	csrw	stvec,t0
-  400158:	0000b2b7          	lui	t0,0xb
-  40015c:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
-  400160:	30229073          	csrw	medeleg,t0
-  400164:	30005073          	csrwi	mstatus,0
-  400168:	00002537          	lui	a0,0x2
-  40016c:	30052073          	csrs	mstatus,a0
-  400170:	00305073          	csrwi	fcsr,0
-  400174:	00000297          	auipc	t0,0x0
-  400178:	01428293          	addi	t0,t0,20 # 400188 <reset_vector+0x13c>
-  40017c:	34129073          	csrw	mepc,t0
-  400180:	f1402573          	csrr	a0,mhartid
-  400184:	30200073          	mret
+  400144:	cda2d073          	csrwi	0xcda,5
+  400148:	00000073          	ecall
+  40014c:	ffc00297          	auipc	t0,0xffc00
+  400150:	eb428293          	addi	t0,t0,-332 # 0 <_start-0x400000>
+  400154:	00028a63          	beqz	t0,400168 <reset_vector+0x11c>
+  400158:	10529073          	csrw	stvec,t0
+  40015c:	0000b2b7          	lui	t0,0xb
+  400160:	10928293          	addi	t0,t0,265 # b109 <_start-0x3f4ef7>
+  400164:	30229073          	csrw	medeleg,t0
+  400168:	30005073          	csrwi	mstatus,0
+  40016c:	00002537          	lui	a0,0x2
+  400170:	30052073          	csrs	mstatus,a0
+  400174:	00305073          	csrwi	fcsr,0
+  400178:	00000297          	auipc	t0,0x0
+  40017c:	01428293          	addi	t0,t0,20 # 40018c <reset_vector+0x140>
+  400180:	34129073          	csrw	mepc,t0
+  400184:	f1402573          	csrr	a0,mhartid
+  400188:	30200073          	mret
 
   # Make sure infinities with different mantissas compare as equal.
   fld f0, minf, a0
-  400188:	00000517          	auipc	a0,0x0
-  40018c:	14853007          	fld	ft0,328(a0) # 4002d0 <begin_signature>
+  40018c:	00000517          	auipc	a0,0x0
+  400190:	14453007          	fld	ft0,324(a0) # 4002d0 <begin_signature>
   fld f1, three, a0
-  400190:	00000517          	auipc	a0,0x0
-  400194:	14853087          	fld	ft1,328(a0) # 4002d8 <three>
+  400194:	00000517          	auipc	a0,0x0
+  400198:	14453087          	fld	ft1,324(a0) # 4002d8 <three>
   fmul.d f1, f1, f0
-  400198:	1200f0d3          	fmul.d	ft1,ft1,ft0
+  40019c:	1200f0d3          	fmul.d	ft1,ft1,ft0
 
-0040019c <test_2>:
+004001a0 <test_2>:
   TEST_CASE( 2, a0, 1, feq.d a0, f0, f1)
-  40019c:	a2102553          	feq.d	a0,ft0,ft1
-  4001a0:	00100393          	li	t2,1
-  4001a4:	00200193          	li	gp,2
-  4001a8:	0c751663          	bne	a0,t2,400274 <fail>
+  4001a0:	a2102553          	feq.d	a0,ft0,ft1
+  4001a4:	00100393          	li	t2,1
+  4001a8:	00200193          	li	gp,2
+  4001ac:	0c751663          	bne	a0,t2,400278 <fail>
 
-004001ac <test_3>:
+004001b0 <test_3>:
   TEST_CASE( 3, a0, 1, fle.d a0, f0, f1)
-  4001ac:	a2100553          	fle.d	a0,ft0,ft1
-  4001b0:	00100393          	li	t2,1
-  4001b4:	00300193          	li	gp,3
-  4001b8:	0a751e63          	bne	a0,t2,400274 <fail>
+  4001b0:	a2100553          	fle.d	a0,ft0,ft1
+  4001b4:	00100393          	li	t2,1
+  4001b8:	00300193          	li	gp,3
+  4001bc:	0a751e63          	bne	a0,t2,400278 <fail>
 
-004001bc <test_4>:
+004001c0 <test_4>:
   TEST_CASE( 4, a0, 0, flt.d a0, f0, f1)
-  4001bc:	a2101553          	flt.d	a0,ft0,ft1
-  4001c0:	00000393          	li	t2,0
-  4001c4:	00400193          	li	gp,4
-  4001c8:	0a751663          	bne	a0,t2,400274 <fail>
+  4001c0:	a2101553          	flt.d	a0,ft0,ft1
+  4001c4:	00000393          	li	t2,0
+  4001c8:	00400193          	li	gp,4
+  4001cc:	0a751663          	bne	a0,t2,400278 <fail>
 
   # Likewise, but for zeroes.
   fcvt.d.w f0, x0
-  4001cc:	d2000053          	fcvt.d.w	ft0,zero
+  4001d0:	d2000053          	fcvt.d.w	ft0,zero
   li a0, 1
-  4001d0:	00100513          	li	a0,1
+  4001d4:	00100513          	li	a0,1
   fcvt.d.w f1, a0
-  4001d4:	d20500d3          	fcvt.d.w	ft1,a0
+  4001d8:	d20500d3          	fcvt.d.w	ft1,a0
   fmul.d f1, f1, f0
-  4001d8:	1200f0d3          	fmul.d	ft1,ft1,ft0
+  4001dc:	1200f0d3          	fmul.d	ft1,ft1,ft0
 
-004001dc <test_5>:
+004001e0 <test_5>:
   TEST_CASE(5, a0, 1, feq.d a0, f0, f1)
-  4001dc:	a2102553          	feq.d	a0,ft0,ft1
-  4001e0:	00100393          	li	t2,1
-  4001e4:	00500193          	li	gp,5
-  4001e8:	08751663          	bne	a0,t2,400274 <fail>
+  4001e0:	a2102553          	feq.d	a0,ft0,ft1
+  4001e4:	00100393          	li	t2,1
+  4001e8:	00500193          	li	gp,5
+  4001ec:	08751663          	bne	a0,t2,400278 <fail>
 
-004001ec <test_6>:
+004001f0 <test_6>:
   TEST_CASE(6, a0, 1, fle.d a0, f0, f1)
-  4001ec:	a2100553          	fle.d	a0,ft0,ft1
-  4001f0:	00100393          	li	t2,1
-  4001f4:	00600193          	li	gp,6
-  4001f8:	06751e63          	bne	a0,t2,400274 <fail>
+  4001f0:	a2100553          	fle.d	a0,ft0,ft1
+  4001f4:	00100393          	li	t2,1
+  4001f8:	00600193          	li	gp,6
+  4001fc:	06751e63          	bne	a0,t2,400278 <fail>
 
-004001fc <test_7>:
+00400200 <test_7>:
   TEST_CASE(7, a0, 0, flt.d a0, f0, f1)
-  4001fc:	a2101553          	flt.d	a0,ft0,ft1
-  400200:	00000393          	li	t2,0
-  400204:	00700193          	li	gp,7
-  400208:	06751663          	bne	a0,t2,400274 <fail>
+  400200:	a2101553          	flt.d	a0,ft0,ft1
+  400204:	00000393          	li	t2,0
+  400208:	00700193          	li	gp,7
+  40020c:	06751663          	bne	a0,t2,400278 <fail>
 
   # When converting small doubles to single-precision subnormals,
   # ensure that the extra precision is discarded.
   flw f0, big, a0
-  40020c:	00000517          	auipc	a0,0x0
-  400210:	0d452007          	flw	ft0,212(a0) # 4002e0 <big>
+  400210:	00000517          	auipc	a0,0x0
+  400214:	0d052007          	flw	ft0,208(a0) # 4002e0 <big>
   fld f1, tiny, a0
-  400214:	00000517          	auipc	a0,0x0
-  400218:	0d453087          	fld	ft1,212(a0) # 4002e8 <tiny>
+  400218:	00000517          	auipc	a0,0x0
+  40021c:	0d053087          	fld	ft1,208(a0) # 4002e8 <tiny>
   fcvt.s.d f1, f1
-  40021c:	4010f0d3          	fcvt.s.d	ft1,ft1
+  400220:	4010f0d3          	fcvt.s.d	ft1,ft1
   fmul.s f0, f0, f1
-  400220:	10107053          	fmul.s	ft0,ft0,ft1
+  400224:	10107053          	fmul.s	ft0,ft0,ft1
   fmv.x.s a0, f0
-  400224:	e0000553          	fmv.x.w	a0,ft0
+  400228:	e0000553          	fmv.x.w	a0,ft0
   lw a1, small
-  400228:	00000597          	auipc	a1,0x0
-  40022c:	0bc5a583          	lw	a1,188(a1) # 4002e4 <small>
+  40022c:	00000597          	auipc	a1,0x0
+  400230:	0b85a583          	lw	a1,184(a1) # 4002e4 <small>
 
-00400230 <test_10>:
+00400234 <test_10>:
   TEST_CASE(10, a0, 0, sub a0, a0, a1)
-  400230:	40b50533          	sub	a0,a0,a1
-  400234:	00000393          	li	t2,0
-  400238:	00a00193          	li	gp,10
-  40023c:	02751c63          	bne	a0,t2,400274 <fail>
+  400234:	40b50533          	sub	a0,a0,a1
+  400238:	00000393          	li	t2,0
+  40023c:	00a00193          	li	gp,10
+  400240:	02751c63          	bne	a0,t2,400278 <fail>
 
   # Make sure FSD+FLD correctly saves and restores a single-precision value.
   flw f0, three, a0
-  400240:	00000517          	auipc	a0,0x0
-  400244:	09852007          	flw	ft0,152(a0) # 4002d8 <three>
+  400244:	00000517          	auipc	a0,0x0
+  400248:	09452007          	flw	ft0,148(a0) # 4002d8 <three>
   fadd.s f1, f0, f0
-  400248:	000070d3          	fadd.s	ft1,ft0,ft0
+  40024c:	000070d3          	fadd.s	ft1,ft0,ft0
   fadd.s f0, f0, f0
-  40024c:	00007053          	fadd.s	ft0,ft0,ft0
+  400250:	00007053          	fadd.s	ft0,ft0,ft0
   fsd f0, tiny, a0
-  400250:	00000517          	auipc	a0,0x0
-  400254:	08053c27          	fsd	ft0,152(a0) # 4002e8 <tiny>
+  400254:	00000517          	auipc	a0,0x0
+  400258:	08053a27          	fsd	ft0,148(a0) # 4002e8 <tiny>
   fld f0, tiny, a0
-  400258:	00000517          	auipc	a0,0x0
-  40025c:	09053007          	fld	ft0,144(a0) # 4002e8 <tiny>
+  40025c:	00000517          	auipc	a0,0x0
+  400260:	08c53007          	fld	ft0,140(a0) # 4002e8 <tiny>
 
-00400260 <test_20>:
+00400264 <test_20>:
   TEST_CASE(20, a0, 1, feq.s a0, f0, f1)
-  400260:	a0102553          	feq.s	a0,ft0,ft1
-  400264:	00100393          	li	t2,1
-  400268:	01400193          	li	gp,20
-  40026c:	00751463          	bne	a0,t2,400274 <fail>
+  400264:	a0102553          	feq.s	a0,ft0,ft1
+  400268:	00100393          	li	t2,1
+  40026c:	01400193          	li	gp,20
+  400270:	00751463          	bne	a0,t2,400278 <fail>
 
   TEST_PASSFAIL
-  400270:	02301063          	bne	zero,gp,400290 <pass>
+  400274:	02301463          	bne	zero,gp,40029c <pass>
 
-00400274 <fail>:
-  400274:	0ff0000f          	fence
-  400278:	00018063          	beqz	gp,400278 <fail+0x4>
-  40027c:	00119193          	slli	gp,gp,0x1
-  400280:	0011e193          	ori	gp,gp,1
-  400284:	05d00893          	li	a7,93
-  400288:	00018513          	mv	a0,gp
-  40028c:	00000073          	ecall
+00400278 <fail>:
+  400278:	0ff0000f          	fence
+  40027c:	00018063          	beqz	gp,40027c <fail+0x4>
+  400280:	00119193          	slli	gp,gp,0x1
+  400284:	0011e193          	ori	gp,gp,1
+  400288:	05d00893          	li	a7,93
+  40028c:	00018513          	mv	a0,gp
+  400290:	cda4d073          	csrwi	0xcda,9
+  400294:	cd90e073          	csrsi	0xcd9,1
+  400298:	00000073          	ecall
 
-00400290 <pass>:
-  400290:	0ff0000f          	fence
-  400294:	00100193          	li	gp,1
-  400298:	05d00893          	li	a7,93
-  40029c:	00000513          	li	a0,0
-  4002a0:	00000073          	ecall
+0040029c <pass>:
+  40029c:	0ff0000f          	fence
+  4002a0:	00100193          	li	gp,1
+  4002a4:	05d00893          	li	a7,93
+  4002a8:	00000513          	li	a0,0
+  4002ac:	cda2d073          	csrwi	0xcda,5
+  4002b0:	00000073          	ecall
 
 RVTEST_CODE_END
-  4002a4:	c0001073          	unimp
+  4002b4:	c0001073          	unimp
 	...

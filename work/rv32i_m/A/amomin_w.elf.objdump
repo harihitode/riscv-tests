@@ -1,0 +1,351 @@
+
+/home/hamada/risc-v_git/riscv-tests_C/riscv-tests/work/rv32i_m/A/amomin_w.elf:     ファイル形式 elf32-littleriscv
+
+
+セクション .text.init の逆アセンブル:
+
+00400000 <_start>:
+  400000:	04c0006f          	j	40004c <reset_vector>
+
+00400004 <trap_vector>:
+  400004:	34202f73          	csrr	t5,mcause
+  400008:	00800f93          	li	t6,8
+  40000c:	03ff0a63          	beq	t5,t6,400040 <write_tohost>
+  400010:	00900f93          	li	t6,9
+  400014:	03ff0663          	beq	t5,t6,400040 <write_tohost>
+  400018:	00b00f93          	li	t6,11
+  40001c:	03ff0263          	beq	t5,t6,400040 <write_tohost>
+  400020:	ffc00f17          	auipc	t5,0xffc00
+  400024:	fe0f0f13          	addi	t5,t5,-32 # 0 <tohost-0x300000>
+  400028:	000f0463          	beqz	t5,400030 <trap_vector+0x2c>
+  40002c:	000f0067          	jr	t5
+  400030:	34202f73          	csrr	t5,mcause
+  400034:	000f5463          	bgez	t5,40003c <handle_exception>
+  400038:	0040006f          	j	40003c <handle_exception>
+
+0040003c <handle_exception>:
+  40003c:	5391e193          	ori	gp,gp,1337
+
+00400040 <write_tohost>:
+  400040:	fff00f17          	auipc	t5,0xfff00
+  400044:	fc3f2023          	sw	gp,-64(t5) # 300000 <tohost>
+  400048:	ff9ff06f          	j	400040 <write_tohost>
+
+0040004c <reset_vector>:
+  40004c:	00000093          	li	ra,0
+  400050:	00000113          	li	sp,0
+  400054:	00000193          	li	gp,0
+  400058:	00000213          	li	tp,0
+  40005c:	00000293          	li	t0,0
+  400060:	00000313          	li	t1,0
+  400064:	00000393          	li	t2,0
+  400068:	00000413          	li	s0,0
+  40006c:	00000493          	li	s1,0
+  400070:	00000513          	li	a0,0
+  400074:	00000593          	li	a1,0
+  400078:	00000613          	li	a2,0
+  40007c:	00000693          	li	a3,0
+  400080:	00000713          	li	a4,0
+  400084:	00000793          	li	a5,0
+  400088:	00000813          	li	a6,0
+  40008c:	00000893          	li	a7,0
+  400090:	00000913          	li	s2,0
+  400094:	00000993          	li	s3,0
+  400098:	00000a13          	li	s4,0
+  40009c:	00000a93          	li	s5,0
+  4000a0:	00000b13          	li	s6,0
+  4000a4:	00000b93          	li	s7,0
+  4000a8:	00000c13          	li	s8,0
+  4000ac:	00000c93          	li	s9,0
+  4000b0:	00000d13          	li	s10,0
+  4000b4:	00000d93          	li	s11,0
+  4000b8:	00000e13          	li	t3,0
+  4000bc:	00000e93          	li	t4,0
+  4000c0:	00000f13          	li	t5,0
+  4000c4:	00000f93          	li	t6,0
+  4000c8:	f1402573          	csrr	a0,mhartid
+  4000cc:	00051063          	bnez	a0,4000cc <reset_vector+0x80>
+  4000d0:	00000297          	auipc	t0,0x0
+  4000d4:	01028293          	addi	t0,t0,16 # 4000e0 <reset_vector+0x94>
+  4000d8:	30529073          	csrw	mtvec,t0
+  4000dc:	18005073          	csrwi	satp,0
+  4000e0:	00000297          	auipc	t0,0x0
+  4000e4:	02028293          	addi	t0,t0,32 # 400100 <reset_vector+0xb4>
+  4000e8:	30529073          	csrw	mtvec,t0
+  4000ec:	800002b7          	lui	t0,0x80000
+  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffdaf>
+  4000f4:	3b029073          	csrw	pmpaddr0,t0
+  4000f8:	01f00293          	li	t0,31
+  4000fc:	3a029073          	csrw	pmpcfg0,t0
+  400100:	30405073          	csrwi	mie,0
+  400104:	00000297          	auipc	t0,0x0
+  400108:	01428293          	addi	t0,t0,20 # 400118 <reset_vector+0xcc>
+  40010c:	30529073          	csrw	mtvec,t0
+  400110:	30205073          	csrwi	medeleg,0
+  400114:	30305073          	csrwi	mideleg,0
+  400118:	00000193          	li	gp,0
+  40011c:	00000297          	auipc	t0,0x0
+  400120:	ee828293          	addi	t0,t0,-280 # 400004 <trap_vector>
+  400124:	30529073          	csrw	mtvec,t0
+  400128:	00100513          	li	a0,1
+  40012c:	01f51513          	slli	a0,a0,0x1f
+  400130:	00054e63          	bltz	a0,40014c <reset_vector+0x100>
+  400134:	0ff0000f          	fence
+  400138:	00100193          	li	gp,1
+  40013c:	05d00893          	li	a7,93
+  400140:	00000513          	li	a0,0
+  400144:	cda2d073          	csrwi	0xcda,5
+  400148:	00000073          	ecall
+  40014c:	ffc00297          	auipc	t0,0xffc00
+  400150:	eb428293          	addi	t0,t0,-332 # 0 <tohost-0x300000>
+  400154:	00028a63          	beqz	t0,400168 <reset_vector+0x11c>
+  400158:	10529073          	csrw	stvec,t0
+  40015c:	0000b2b7          	lui	t0,0xb
+  400160:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
+  400164:	30229073          	csrw	medeleg,t0
+  400168:	30005073          	csrwi	mstatus,0
+  40016c:	00000297          	auipc	t0,0x0
+  400170:	01428293          	addi	t0,t0,20 # 400180 <test_2>
+  400174:	34129073          	csrw	mepc,t0
+  400178:	f1402573          	csrr	a0,mhartid
+  40017c:	30200073          	mret
+
+00400180 <test_2>:
+  400180:	80000537          	lui	a0,0x80000
+  400184:	80000593          	li	a1,-2048
+  400188:	00000697          	auipc	a3,0x0
+  40018c:	0c068693          	addi	a3,a3,192 # 400248 <amo_operand>
+  400190:	00a6a023          	sw	a0,0(a3)
+  400194:	80b6a72f          	amomin.w	a4,a1,(a3)
+  400198:	800003b7          	lui	t2,0x80000
+  40019c:	00200193          	li	gp,2
+  4001a0:	04771063          	bne	a4,t2,4001e0 <fail>
+
+004001a4 <test_3>:
+  4001a4:	0006a783          	lw	a5,0(a3)
+  4001a8:	800003b7          	lui	t2,0x80000
+  4001ac:	00300193          	li	gp,3
+  4001b0:	02779863          	bne	a5,t2,4001e0 <fail>
+
+004001b4 <test_4>:
+  4001b4:	fff00593          	li	a1,-1
+  4001b8:	0006a023          	sw	zero,0(a3)
+  4001bc:	80b6a72f          	amomin.w	a4,a1,(a3)
+  4001c0:	00000393          	li	t2,0
+  4001c4:	00400193          	li	gp,4
+  4001c8:	00771c63          	bne	a4,t2,4001e0 <fail>
+
+004001cc <test_5>:
+  4001cc:	0006a783          	lw	a5,0(a3)
+  4001d0:	fff00393          	li	t2,-1
+  4001d4:	00500193          	li	gp,5
+  4001d8:	00779463          	bne	a5,t2,4001e0 <fail>
+  4001dc:	02301463          	bne	zero,gp,400204 <pass>
+
+004001e0 <fail>:
+  4001e0:	0ff0000f          	fence
+  4001e4:	00018063          	beqz	gp,4001e4 <fail+0x4>
+  4001e8:	00119193          	slli	gp,gp,0x1
+  4001ec:	0011e193          	ori	gp,gp,1
+  4001f0:	05d00893          	li	a7,93
+  4001f4:	00018513          	mv	a0,gp
+  4001f8:	cda4d073          	csrwi	0xcda,9
+  4001fc:	cd90e073          	csrsi	0xcd9,1
+  400200:	00000073          	ecall
+
+00400204 <pass>:
+  400204:	0ff0000f          	fence
+  400208:	00100193          	li	gp,1
+  40020c:	05d00893          	li	a7,93
+  400210:	00000513          	li	a0,0
+  400214:	cda2d073          	csrwi	0xcda,5
+  400218:	00000073          	ecall
+  40021c:	c0001073          	unimp
+	...
+
+セクション .tohost の逆アセンブル:
+
+00300000 <tohost>:
+	...
+
+00300040 <fromhost>:
+	...
+
+セクション .bss の逆アセンブル:
+
+00400248 <amo_operand>:
+	...
+
+セクション .riscv.attributes の逆アセンブル:
+
+00000000 <.riscv.attributes>:
+   0:	2241                	jal	180 <tohost-0x2ffe80>
+   2:	0000                	unimp
+   4:	7200                	flw	fs0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <tohost-0x2fffec>
+   c:	0018                	0x18
+   e:	0000                	unimp
+  10:	7205                	lui	tp,0xfffe1
+  12:	3376                	fld	ft6,376(sp)
+  14:	6932                	flw	fs2,12(sp)
+  16:	7032                	flw	ft0,44(sp)
+  18:	5f30                	lw	a2,120(a4)
+  1a:	3261                	jal	fffff9a2 <_end+0xffbff752>
+  1c:	3070                	fld	fa2,224(s0)
+  1e:	0800                	addi	s0,sp,16
+  20:	0a01                	addi	s4,s4,0
+  22:	0b              	Address 0x0000000000000022 is out of bounds.
+
+
+セクション .debug_line の逆アセンブル:
+
+00000000 <.debug_line>:
+   0:	006a                	c.slli	zero,0x1a
+   2:	0000                	unimp
+   4:	0005                	c.nop	1
+   6:	0004                	0x4
+   8:	002e                	c.slli	zero,0xb
+   a:	0000                	unimp
+   c:	0101                	addi	sp,sp,0
+   e:	fb01                	bnez	a4,ffffff1e <_end+0xffbffcce>
+  10:	0d0e                	slli	s10,s10,0x3
+  12:	0100                	addi	s0,sp,128
+  14:	0101                	addi	sp,sp,0
+  16:	0001                	nop
+  18:	0000                	unimp
+  1a:	0001                	nop
+  1c:	0100                	addi	s0,sp,128
+  1e:	0101                	addi	sp,sp,0
+  20:	021f 0000 0000      	0x21f
+  26:	0000                	unimp
+  28:	0000                	unimp
+  2a:	0102                	c.slli64	sp
+  2c:	021f 020f 000e      	0xe020f021f
+  32:	0000                	unimp
+  34:	0e00                	addi	s0,sp,784
+  36:	0000                	unimp
+  38:	0100                	addi	s0,sp,128
+  3a:	0500                	addi	s0,sp,640
+  3c:	0002                	c.slli64	zero
+  3e:	4000                	lw	s0,0(s0)
+  40:	0300                	addi	s0,sp,384
+  42:	010d                	addi	sp,sp,3
+  44:	80090203          	lb	tp,-2048(s2)
+  48:	0101                	addi	sp,sp,0
+  4a:	24090803          	lb	a6,576(s2)
+  4e:	0100                	addi	s0,sp,128
+  50:	10090203          	lb	tp,256(s2)
+  54:	0100                	addi	s0,sp,128
+  56:	18090603          	lb	a2,384(s2)
+  5a:	0100                	addi	s0,sp,128
+  5c:	10090203          	lb	tp,256(s2)
+  60:	0100                	addi	s0,sp,128
+  62:	40090203          	lb	tp,1024(s2)
+  66:	0100                	addi	s0,sp,128
+  68:	0409                	addi	s0,s0,2
+  6a:	0000                	unimp
+  6c:	0101                	addi	sp,sp,0
+
+セクション .debug_line_str の逆アセンブル:
+
+00000000 <.debug_line_str>:
+   0:	2f637273          	csrrci	tp,0x2f6,6
+   4:	2e2e                	fld	ft8,200(sp)
+   6:	3676722f          	0x3676722f
+   a:	7534                	flw	fa3,104(a0)
+   c:	0061                	c.nop	24
+   e:	6d61                	lui	s10,0x18
+  10:	6e696d6f          	jal	s10,966f6 <tohost-0x26990a>
+  14:	775f 532e       	0x532e775f
+
+セクション .debug_info の逆アセンブル:
+
+00000000 <.debug_info>:
+   0:	0021                	c.nop	8
+   2:	0000                	unimp
+   4:	0005                	c.nop	1
+   6:	0401                	addi	s0,s0,0
+   8:	0000                	unimp
+   a:	0000                	unimp
+   c:	0001                	nop
+   e:	0000                	unimp
+  10:	0000                	unimp
+  12:	4000                	lw	s0,0(s0)
+  14:	dc00                	sw	s0,56(s0)
+  16:	0004                	0x4
+  18:	0000                	unimp
+  1a:	0b00                	addi	s0,sp,400
+  1c:	0000                	unimp
+  1e:	5800                	lw	s0,48(s0)
+  20:	0000                	unimp
+  22:	0100                	addi	s0,sp,128
+  24:	80              	Address 0x0000000000000024 is out of bounds.
+
+
+セクション .debug_abbrev の逆アセンブル:
+
+00000000 <.debug_abbrev>:
+   0:	1101                	addi	sp,sp,-32
+   2:	1000                	addi	s0,sp,32
+   4:	12011117          	auipc	sp,0x12011
+   8:	1b0e030f          	0x1b0e030f
+   c:	250e                	fld	fa0,192(sp)
+   e:	130e                	slli	t1,t1,0x23
+  10:	0005                	c.nop	1
+	...
+
+セクション .debug_aranges の逆アセンブル:
+
+00000000 <.debug_aranges>:
+   0:	001c                	0x1c
+   2:	0000                	unimp
+   4:	0002                	c.slli64	zero
+   6:	0000                	unimp
+   8:	0000                	unimp
+   a:	0004                	0x4
+   c:	0000                	unimp
+   e:	0000                	unimp
+  10:	0000                	unimp
+  12:	0040                	addi	s0,sp,4
+  14:	0220                	addi	s0,sp,264
+	...
+
+セクション .debug_str の逆アセンブル:
+
+00000000 <.debug_str>:
+   0:	6d61                	lui	s10,0x18
+   2:	6e696d6f          	jal	s10,966e8 <tohost-0x269918>
+   6:	775f 532e 2f00      	0x2f00532e775f
+   c:	6f68                	flw	fa0,92(a4)
+   e:	656d                	lui	a0,0x1b
+  10:	6d61682f          	0x6d61682f
+  14:	6461                	lui	s0,0x18
+  16:	2f61                	jal	7ae <tohost-0x2ff852>
+  18:	6972                	flw	fs2,28(sp)
+  1a:	762d6373          	csrrsi	t1,0x762,26
+  1e:	675f 7469 722f      	0x722f7469675f
+  24:	7369                	lui	t1,0xffffa
+  26:	742d7663          	bgeu	s10,sp,772 <tohost-0x2ff88e>
+  2a:	7365                	lui	t1,0xffff9
+  2c:	7374                	flw	fa3,100(a4)
+  2e:	435f 722f 7369      	0x7369722f435f
+  34:	742d7663          	bgeu	s10,sp,780 <tohost-0x2ff880>
+  38:	7365                	lui	t1,0xffff9
+  3a:	7374                	flw	fa3,100(a4)
+  3c:	7369722f          	0x7369722f
+  40:	742d7663          	bgeu	s10,sp,78c <tohost-0x2ff874>
+  44:	7365                	lui	t1,0xffff9
+  46:	2d74                	fld	fa3,216(a0)
+  48:	74697573          	csrrci	a0,0x746,18
+  4c:	2f65                	jal	804 <tohost-0x2ff7fc>
+  4e:	7672                	flw	fa2,60(sp)
+  50:	5f693233          	0x5f693233
+  54:	2f6d                	jal	80e <tohost-0x2ff7f2>
+  56:	0041                	c.nop	16
+  58:	20554e47          	fmsub.s	ft8,fa0,ft5,ft4,rmm
+  5c:	5341                	li	t1,-16
+  5e:	3220                	fld	fs0,96(a2)
+  60:	332e                	fld	ft6,232(sp)
+  62:	2e36                	fld	ft8,328(sp)
+  64:	0031                	c.nop	12

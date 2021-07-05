@@ -1,0 +1,189 @@
+
+/home/hamada/risc-v_git/riscv-tests_C/riscv-tests/work/rv32i_m/A/amoand_w.elf:     ファイル形式 elf32-littleriscv
+
+
+セクション .text.init の逆アセンブル:
+
+00400000 <_start>:
+
+#include "riscv_test.h"
+#include "test_macros.h"
+
+RVTEST_RV64U
+RVTEST_CODE_BEGIN
+  400000:	04c0006f          	j	40004c <reset_vector>
+
+00400004 <trap_vector>:
+  400004:	34202f73          	csrr	t5,mcause
+  400008:	00800f93          	li	t6,8
+  40000c:	03ff0a63          	beq	t5,t6,400040 <write_tohost>
+  400010:	00900f93          	li	t6,9
+  400014:	03ff0663          	beq	t5,t6,400040 <write_tohost>
+  400018:	00b00f93          	li	t6,11
+  40001c:	03ff0263          	beq	t5,t6,400040 <write_tohost>
+  400020:	ffc00f17          	auipc	t5,0xffc00
+  400024:	fe0f0f13          	addi	t5,t5,-32 # 0 <tohost-0x300000>
+  400028:	000f0463          	beqz	t5,400030 <trap_vector+0x2c>
+  40002c:	000f0067          	jr	t5
+  400030:	34202f73          	csrr	t5,mcause
+  400034:	000f5463          	bgez	t5,40003c <handle_exception>
+  400038:	0040006f          	j	40003c <handle_exception>
+
+0040003c <handle_exception>:
+  40003c:	5391e193          	ori	gp,gp,1337
+
+00400040 <write_tohost>:
+  400040:	fff00f17          	auipc	t5,0xfff00
+  400044:	fc3f2023          	sw	gp,-64(t5) # 300000 <tohost>
+  400048:	ff9ff06f          	j	400040 <write_tohost>
+
+0040004c <reset_vector>:
+  40004c:	00000093          	li	ra,0
+  400050:	00000113          	li	sp,0
+  400054:	00000193          	li	gp,0
+  400058:	00000213          	li	tp,0
+  40005c:	00000293          	li	t0,0
+  400060:	00000313          	li	t1,0
+  400064:	00000393          	li	t2,0
+  400068:	00000413          	li	s0,0
+  40006c:	00000493          	li	s1,0
+  400070:	00000513          	li	a0,0
+  400074:	00000593          	li	a1,0
+  400078:	00000613          	li	a2,0
+  40007c:	00000693          	li	a3,0
+  400080:	00000713          	li	a4,0
+  400084:	00000793          	li	a5,0
+  400088:	00000813          	li	a6,0
+  40008c:	00000893          	li	a7,0
+  400090:	00000913          	li	s2,0
+  400094:	00000993          	li	s3,0
+  400098:	00000a13          	li	s4,0
+  40009c:	00000a93          	li	s5,0
+  4000a0:	00000b13          	li	s6,0
+  4000a4:	00000b93          	li	s7,0
+  4000a8:	00000c13          	li	s8,0
+  4000ac:	00000c93          	li	s9,0
+  4000b0:	00000d13          	li	s10,0
+  4000b4:	00000d93          	li	s11,0
+  4000b8:	00000e13          	li	t3,0
+  4000bc:	00000e93          	li	t4,0
+  4000c0:	00000f13          	li	t5,0
+  4000c4:	00000f93          	li	t6,0
+  4000c8:	f1402573          	csrr	a0,mhartid
+  4000cc:	00051063          	bnez	a0,4000cc <reset_vector+0x80>
+  4000d0:	00000297          	auipc	t0,0x0
+  4000d4:	01028293          	addi	t0,t0,16 # 4000e0 <reset_vector+0x94>
+  4000d8:	30529073          	csrw	mtvec,t0
+  4000dc:	18005073          	csrwi	satp,0
+  4000e0:	00000297          	auipc	t0,0x0
+  4000e4:	02028293          	addi	t0,t0,32 # 400100 <reset_vector+0xb4>
+  4000e8:	30529073          	csrw	mtvec,t0
+  4000ec:	800002b7          	lui	t0,0x80000
+  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffdaf>
+  4000f4:	3b029073          	csrw	pmpaddr0,t0
+  4000f8:	01f00293          	li	t0,31
+  4000fc:	3a029073          	csrw	pmpcfg0,t0
+  400100:	30405073          	csrwi	mie,0
+  400104:	00000297          	auipc	t0,0x0
+  400108:	01428293          	addi	t0,t0,20 # 400118 <reset_vector+0xcc>
+  40010c:	30529073          	csrw	mtvec,t0
+  400110:	30205073          	csrwi	medeleg,0
+  400114:	30305073          	csrwi	mideleg,0
+  400118:	00000193          	li	gp,0
+  40011c:	00000297          	auipc	t0,0x0
+  400120:	ee828293          	addi	t0,t0,-280 # 400004 <trap_vector>
+  400124:	30529073          	csrw	mtvec,t0
+  400128:	00100513          	li	a0,1
+  40012c:	01f51513          	slli	a0,a0,0x1f
+  400130:	00054e63          	bltz	a0,40014c <reset_vector+0x100>
+  400134:	0ff0000f          	fence
+  400138:	00100193          	li	gp,1
+  40013c:	05d00893          	li	a7,93
+  400140:	00000513          	li	a0,0
+  400144:	cda2d073          	csrwi	0xcda,5
+  400148:	00000073          	ecall
+  40014c:	ffc00297          	auipc	t0,0xffc00
+  400150:	eb428293          	addi	t0,t0,-332 # 0 <tohost-0x300000>
+  400154:	00028a63          	beqz	t0,400168 <reset_vector+0x11c>
+  400158:	10529073          	csrw	stvec,t0
+  40015c:	0000b2b7          	lui	t0,0xb
+  400160:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
+  400164:	30229073          	csrw	medeleg,t0
+  400168:	30005073          	csrwi	mstatus,0
+  40016c:	00000297          	auipc	t0,0x0
+  400170:	01428293          	addi	t0,t0,20 # 400180 <test_2>
+  400174:	34129073          	csrw	mepc,t0
+  400178:	f1402573          	csrr	a0,mhartid
+  40017c:	30200073          	mret
+
+00400180 <test_2>:
+
+  TEST_CASE(2, a4, 0xffffffff80000000, \
+  400180:	80000537          	lui	a0,0x80000
+  400184:	80000593          	li	a1,-2048
+  400188:	00000697          	auipc	a3,0x0
+  40018c:	0c068693          	addi	a3,a3,192 # 400248 <amo_operand>
+  400190:	00a6a023          	sw	a0,0(a3)
+  400194:	60b6a72f          	amoand.w	a4,a1,(a3)
+  400198:	800003b7          	lui	t2,0x80000
+  40019c:	00200193          	li	gp,2
+  4001a0:	02771e63          	bne	a4,t2,4001dc <fail>
+
+004001a4 <test_3>:
+    la a3, amo_operand; \
+    sw a0, 0(a3); \
+    amoand.w	a4, a1, 0(a3); \
+  )
+
+  TEST_CASE(3, a5, 0xffffffff80000000, lw a5, 0(a3))
+  4001a4:	0006a783          	lw	a5,0(a3)
+  4001a8:	800003b7          	lui	t2,0x80000
+  4001ac:	00300193          	li	gp,3
+  4001b0:	02779663          	bne	a5,t2,4001dc <fail>
+
+004001b4 <test_4>:
+
+  # try again after a cache miss
+  TEST_CASE(4, a4, 0xffffffff80000000, \
+  4001b4:	800005b7          	lui	a1,0x80000
+  4001b8:	60b6a72f          	amoand.w	a4,a1,(a3)
+  4001bc:	800003b7          	lui	t2,0x80000
+  4001c0:	00400193          	li	gp,4
+  4001c4:	00771c63          	bne	a4,t2,4001dc <fail>
+
+004001c8 <test_5>:
+    li  a1, 0x0000000080000000; \
+    amoand.w a4, a1, 0(a3); \
+  )
+
+  TEST_CASE(5, a5, 0xffffffff80000000, lw a5, 0(a3))
+  4001c8:	0006a783          	lw	a5,0(a3)
+  4001cc:	800003b7          	lui	t2,0x80000
+  4001d0:	00500193          	li	gp,5
+  4001d4:	00779463          	bne	a5,t2,4001dc <fail>
+
+  TEST_PASSFAIL
+  4001d8:	02301463          	bne	zero,gp,400200 <pass>
+
+004001dc <fail>:
+  4001dc:	0ff0000f          	fence
+  4001e0:	00018063          	beqz	gp,4001e0 <fail+0x4>
+  4001e4:	00119193          	slli	gp,gp,0x1
+  4001e8:	0011e193          	ori	gp,gp,1
+  4001ec:	05d00893          	li	a7,93
+  4001f0:	00018513          	mv	a0,gp
+  4001f4:	cda4d073          	csrwi	0xcda,9
+  4001f8:	cd90e073          	csrsi	0xcd9,1
+  4001fc:	00000073          	ecall
+
+00400200 <pass>:
+  400200:	0ff0000f          	fence
+  400204:	00100193          	li	gp,1
+  400208:	05d00893          	li	a7,93
+  40020c:	00000513          	li	a0,0
+  400210:	cda2d073          	csrwi	0xcda,5
+  400214:	00000073          	ecall
+
+RVTEST_CODE_END
+  400218:	c0001073          	unimp
+	...

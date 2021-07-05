@@ -8,10 +8,10 @@ ELF ヘッダ:
   型:                                EXEC (実行可能ファイル)
   マシン:                            RISC-V
   バージョン:                        0x1
-  エントリポイントアドレス:          0x400544
+  エントリポイントアドレス:          0x4004c4
   プログラムヘッダ始点:            52 (バイト)
-  セクションヘッダ始点:              11920 (バイト)
-  フラグ:                            0x0
+  セクションヘッダ始点:              11568 (バイト)
+  フラグ:                            0x2, single-float ABI
   Size of this header:               52 (bytes)
   Size of program headers:           32 (bytes)
   Number of program headers:         2
@@ -22,19 +22,19 @@ ELF ヘッダ:
 セクションヘッダ:
   [番] 名前              タイプ          アドレス Off    サイズ ES Flg Lk Inf Al
   [ 0]                   NULL            00000000 000000 000000 00      0   0  0
-  [ 1] .tohost           PROGBITS        00300000 001000 000048 00  WA  0   0 64
-  [ 2] .text.init        PROGBITS        00400000 002000 000544 00  AX  0   0 64
-  [ 3] .data             PROGBITS        00400550 002550 0001e0 00  WA  0   0 16
-  [ 4] .riscv.attributes RISCV_ATTRIBUTE 00000000 002730 000032 00      0   0  1
-  [ 5] .debug_line       PROGBITS        00000000 002762 0000b0 00      0   0  1
-  [ 6] .debug_line_str   PROGBITS        00000000 002812 00000b 01  MS  0   0  1
-  [ 7] .debug_info       PROGBITS        00000000 00281d 000025 00      0   0  1
-  [ 8] .debug_abbrev     PROGBITS        00000000 002842 000014 00      0   0  1
-  [ 9] .debug_aranges    PROGBITS        00000000 002858 000020 00      0   0  8
-  [10] .debug_str        PROGBITS        00000000 002878 000054 01  MS  0   0  1
-  [11] .symtab           SYMTAB          00000000 0028cc 000370 10     12  49  4
-  [12] .strtab           STRTAB          00000000 002c3c 0001bb 00      0   0  1
-  [13] .shstrtab         STRTAB          00000000 002df7 000096 00      0   0  1
+  [ 1] .text.init        PROGBITS        00400000 002000 0004c4 00  AX  0   0 64
+  [ 2] .tohost           PROGBITS        00300000 001000 000048 00  WA  0   0 64
+  [ 3] .data             PROGBITS        004004d0 0024d0 0000f0 00  WA  0   0 16
+  [ 4] .riscv.attributes RISCV_ATTRIBUTE 00000000 0025c0 000023 00      0   0  1
+  [ 5] .debug_line       PROGBITS        00000000 0025e3 0000b0 00      0   0  1
+  [ 6] .debug_line_str   PROGBITS        00000000 002693 000015 01  MS  0   0  1
+  [ 7] .debug_info       PROGBITS        00000000 0026a8 000025 00      0   0  1
+  [ 8] .debug_abbrev     PROGBITS        00000000 0026cd 000014 00      0   0  1
+  [ 9] .debug_aranges    PROGBITS        00000000 0026e8 000020 00      0   0  8
+  [10] .debug_str        PROGBITS        00000000 002708 000062 01  MS  0   0  1
+  [11] .symtab           SYMTAB          00000000 00276c 000370 10     12  49  4
+  [12] .strtab           STRTAB          00000000 002adc 0001bb 00      0   0  1
+  [13] .shstrtab         STRTAB          00000000 002c97 000096 00      0   0  1
 Key to Flags:
   W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
   L (link order), O (extra OS processing required), G (group), T (TLS),
@@ -46,7 +46,7 @@ Key to Flags:
 プログラムヘッダ:
   タイプ       オフセット 仮想Addr   物理Addr   FileSiz MemSiz  Flg Align
   LOAD           0x001000 0x00300000 0x00300000 0x00048 0x00048 RW  0x1000
-  LOAD           0x002000 0x00400000 0x00400000 0x00730 0x00730 RWE 0x1000
+  LOAD           0x002000 0x00400000 0x00400000 0x005c0 0x005c0 RWE 0x1000
 
  セグメントマッピングへのセクション:
   セグメントセクション...
@@ -62,9 +62,9 @@ The decoding of unwind sections for machine type RISC-V is not currently support
 Symbol table '.symtab' contains 55 entries:
   番号:      値 サイズ タイプ  Bind   Vis      索引名
      0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
-     1: 00300000     0 SECTION LOCAL  DEFAULT    1 
-     2: 00400000     0 SECTION LOCAL  DEFAULT    2 
-     3: 00400550     0 SECTION LOCAL  DEFAULT    3 
+     1: 00400000     0 SECTION LOCAL  DEFAULT    1 
+     2: 00300000     0 SECTION LOCAL  DEFAULT    2 
+     3: 004004d0     0 SECTION LOCAL  DEFAULT    3 
      4: 00000000     0 SECTION LOCAL  DEFAULT    4 
      5: 00000000     0 SECTION LOCAL  DEFAULT    5 
      6: 00000000     0 SECTION LOCAL  DEFAULT    6 
@@ -72,54 +72,54 @@ Symbol table '.symtab' contains 55 entries:
      8: 00000000     0 SECTION LOCAL  DEFAULT    8 
      9: 00000000     0 SECTION LOCAL  DEFAULT    9 
     10: 00000000     0 SECTION LOCAL  DEFAULT   10 
-    11: 00000000     0 FILE    LOCAL  DEFAULT  ABS ccwwfh5F.o
-    12: 0040004c     0 NOTYPE  LOCAL  DEFAULT    2 reset_vector
-    13: 00400004     0 NOTYPE  LOCAL  DEFAULT    2 trap_vector
-    14: 00400040     0 NOTYPE  LOCAL  DEFAULT    2 write_tohost
-    15: 0040003c     0 NOTYPE  LOCAL  DEFAULT    2 handle_exception
-    16: 0040003c     0 NOTYPE  LOCAL  DEFAULT    2 other_exception
-    17: 00400188     0 NOTYPE  LOCAL  DEFAULT    2 test_2
-    18: 00400550     0 NOTYPE  LOCAL  DEFAULT    3 test_2_data
-    19: 00400510     0 NOTYPE  LOCAL  DEFAULT    2 fail
-    20: 004001c4     0 NOTYPE  LOCAL  DEFAULT    2 test_3
-    21: 00400570     0 NOTYPE  LOCAL  DEFAULT    3 test_3_data
-    22: 00400200     0 NOTYPE  LOCAL  DEFAULT    2 test_4
-    23: 00400590     0 NOTYPE  LOCAL  DEFAULT    3 test_4_data
-    24: 0040023c     0 NOTYPE  LOCAL  DEFAULT    2 test_5
-    25: 004005b0     0 NOTYPE  LOCAL  DEFAULT    3 test_5_data
-    26: 00400278     0 NOTYPE  LOCAL  DEFAULT    2 test_6
-    27: 004005d0     0 NOTYPE  LOCAL  DEFAULT    3 test_6_data
-    28: 004002b4     0 NOTYPE  LOCAL  DEFAULT    2 test_7
-    29: 004005f0     0 NOTYPE  LOCAL  DEFAULT    3 test_7_data
-    30: 004002f0     0 NOTYPE  LOCAL  DEFAULT    2 test_8
-    31: 00400610     0 NOTYPE  LOCAL  DEFAULT    3 test_8_data
-    32: 0040032c     0 NOTYPE  LOCAL  DEFAULT    2 test_9
-    33: 00400630     0 NOTYPE  LOCAL  DEFAULT    3 test_9_data
-    34: 00400368     0 NOTYPE  LOCAL  DEFAULT    2 test_10
-    35: 00400650     0 NOTYPE  LOCAL  DEFAULT    3 test_10_data
-    36: 004003a4     0 NOTYPE  LOCAL  DEFAULT    2 test_11
-    37: 00400670     0 NOTYPE  LOCAL  DEFAULT    3 test_11_data
-    38: 004003e0     0 NOTYPE  LOCAL  DEFAULT    2 test_12
-    39: 00400690     0 NOTYPE  LOCAL  DEFAULT    3 test_12_data
-    40: 0040041c     0 NOTYPE  LOCAL  DEFAULT    2 test_13
-    41: 004006b0     0 NOTYPE  LOCAL  DEFAULT    3 test_13_data
-    42: 00400458     0 NOTYPE  LOCAL  DEFAULT    2 test_14
-    43: 004006d0     0 NOTYPE  LOCAL  DEFAULT    3 test_14_data
-    44: 00400494     0 NOTYPE  LOCAL  DEFAULT    2 test_15
-    45: 004006f0     0 NOTYPE  LOCAL  DEFAULT    3 test_15_data
-    46: 004004d0     0 NOTYPE  LOCAL  DEFAULT    2 test_16
-    47: 00400710     0 NOTYPE  LOCAL  DEFAULT    3 test_16_data
-    48: 0040052c     0 NOTYPE  LOCAL  DEFAULT    2 pass
-    49: 00400730     0 NOTYPE  GLOBAL DEFAULT    3 end_signature
-    50: 00400730     0 NOTYPE  GLOBAL DEFAULT    3 begin_signature
-    51: 00400000     0 NOTYPE  GLOBAL DEFAULT    2 _start
-    52: 00400730     0 NOTYPE  GLOBAL DEFAULT    3 _end
-    53: 00300040     0 NOTYPE  GLOBAL DEFAULT    1 fromhost
-    54: 00300000     0 NOTYPE  GLOBAL DEFAULT    1 tohost
+    11: 00000000     0 FILE    LOCAL  DEFAULT  ABS cck5p61e.o
+    12: 0040004c     0 NOTYPE  LOCAL  DEFAULT    1 reset_vector
+    13: 00400004     0 NOTYPE  LOCAL  DEFAULT    1 trap_vector
+    14: 00400040     0 NOTYPE  LOCAL  DEFAULT    1 write_tohost
+    15: 0040003c     0 NOTYPE  LOCAL  DEFAULT    1 handle_exception
+    16: 0040003c     0 NOTYPE  LOCAL  DEFAULT    1 other_exception
+    17: 0040018c     0 NOTYPE  LOCAL  DEFAULT    1 test_2
+    18: 004004d0     0 NOTYPE  LOCAL  DEFAULT    3 test_2_data
+    19: 00400460     0 NOTYPE  LOCAL  DEFAULT    1 fail
+    20: 004001bc     0 NOTYPE  LOCAL  DEFAULT    1 test_3
+    21: 004004e0     0 NOTYPE  LOCAL  DEFAULT    3 test_3_data
+    22: 004001ec     0 NOTYPE  LOCAL  DEFAULT    1 test_4
+    23: 004004f0     0 NOTYPE  LOCAL  DEFAULT    3 test_4_data
+    24: 0040021c     0 NOTYPE  LOCAL  DEFAULT    1 test_5
+    25: 00400500     0 NOTYPE  LOCAL  DEFAULT    3 test_5_data
+    26: 0040024c     0 NOTYPE  LOCAL  DEFAULT    1 test_6
+    27: 00400510     0 NOTYPE  LOCAL  DEFAULT    3 test_6_data
+    28: 0040027c     0 NOTYPE  LOCAL  DEFAULT    1 test_7
+    29: 00400520     0 NOTYPE  LOCAL  DEFAULT    3 test_7_data
+    30: 004002ac     0 NOTYPE  LOCAL  DEFAULT    1 test_8
+    31: 00400530     0 NOTYPE  LOCAL  DEFAULT    3 test_8_data
+    32: 004002dc     0 NOTYPE  LOCAL  DEFAULT    1 test_9
+    33: 00400540     0 NOTYPE  LOCAL  DEFAULT    3 test_9_data
+    34: 0040030c     0 NOTYPE  LOCAL  DEFAULT    1 test_10
+    35: 00400550     0 NOTYPE  LOCAL  DEFAULT    3 test_10_data
+    36: 0040033c     0 NOTYPE  LOCAL  DEFAULT    1 test_11
+    37: 00400560     0 NOTYPE  LOCAL  DEFAULT    3 test_11_data
+    38: 0040036c     0 NOTYPE  LOCAL  DEFAULT    1 test_12
+    39: 00400570     0 NOTYPE  LOCAL  DEFAULT    3 test_12_data
+    40: 0040039c     0 NOTYPE  LOCAL  DEFAULT    1 test_13
+    41: 00400580     0 NOTYPE  LOCAL  DEFAULT    3 test_13_data
+    42: 004003cc     0 NOTYPE  LOCAL  DEFAULT    1 test_14
+    43: 00400590     0 NOTYPE  LOCAL  DEFAULT    3 test_14_data
+    44: 004003fc     0 NOTYPE  LOCAL  DEFAULT    1 test_15
+    45: 004005a0     0 NOTYPE  LOCAL  DEFAULT    3 test_15_data
+    46: 0040042c     0 NOTYPE  LOCAL  DEFAULT    1 test_16
+    47: 004005b0     0 NOTYPE  LOCAL  DEFAULT    3 test_16_data
+    48: 00400484     0 NOTYPE  LOCAL  DEFAULT    1 pass
+    49: 004005c0     0 NOTYPE  GLOBAL DEFAULT    3 end_signature
+    50: 004005c0     0 NOTYPE  GLOBAL DEFAULT    3 begin_signature
+    51: 00400000     0 NOTYPE  GLOBAL DEFAULT    1 _start
+    52: 004005c0     0 NOTYPE  GLOBAL DEFAULT    3 _end
+    53: 00300040     0 NOTYPE  GLOBAL DEFAULT    2 fromhost
+    54: 00300000     0 NOTYPE  GLOBAL DEFAULT    2 tohost
 
 このファイルからはバージョン情報が見つかりません。
 Attribute Section: riscv
 ファイル属性
-  Tag_RISCV_arch: "rv32i2p0_m2p0_a2p0_f2p0_d2p0"
+  Tag_RISCV_arch: "rv32i2p0_f2p0"
   Tag_RISCV_priv_spec: 1
   Tag_RISCV_priv_spec_minor: 11

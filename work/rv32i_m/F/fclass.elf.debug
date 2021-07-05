@@ -1,5 +1,5 @@
 
-/home/hamada/risc-v_git/riscv-tests/work/rv32i_m/F/fclass.elf:     ファイル形式 elf32-littleriscv
+/home/hamada/risc-v_git/riscv-tests_C/riscv-tests/work/rv32i_m/F/fclass.elf:     ファイル形式 elf32-littleriscv
 
 
 セクション .text.init の逆アセンブル:
@@ -79,7 +79,7 @@ RVTEST_CODE_BEGIN
   4000e4:	02028293          	addi	t0,t0,32 # 400100 <reset_vector+0xb4>
   4000e8:	30529073          	csrw	mtvec,t0
   4000ec:	800002b7          	lui	t0,0x80000
-  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffc9f>
+  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <begin_signature+0x7fbffcef>
   4000f4:	3b029073          	csrw	pmpaddr0,t0
   4000f8:	01f00293          	li	t0,31
   4000fc:	3a029073          	csrw	pmpcfg0,t0
@@ -95,153 +95,150 @@ RVTEST_CODE_BEGIN
   400124:	30529073          	csrw	mtvec,t0
   400128:	00100513          	li	a0,1
   40012c:	01f51513          	slli	a0,a0,0x1f
-  400130:	00054c63          	bltz	a0,400148 <reset_vector+0xfc>
+  400130:	00054e63          	bltz	a0,40014c <reset_vector+0x100>
   400134:	0ff0000f          	fence
   400138:	00100193          	li	gp,1
   40013c:	05d00893          	li	a7,93
   400140:	00000513          	li	a0,0
-  400144:	00000073          	ecall
-  400148:	ffc00297          	auipc	t0,0xffc00
-  40014c:	eb828293          	addi	t0,t0,-328 # 0 <tohost-0x300000>
-  400150:	00028a63          	beqz	t0,400164 <reset_vector+0x118>
-  400154:	10529073          	csrw	stvec,t0
-  400158:	0000b2b7          	lui	t0,0xb
-  40015c:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
-  400160:	30229073          	csrw	medeleg,t0
-  400164:	30005073          	csrwi	mstatus,0
-  400168:	00002537          	lui	a0,0x2
-  40016c:	30052073          	csrs	mstatus,a0
-  400170:	00305073          	csrwi	fcsr,0
-  400174:	00000297          	auipc	t0,0x0
-  400178:	01428293          	addi	t0,t0,20 # 400188 <test_2>
-  40017c:	34129073          	csrw	mepc,t0
-  400180:	f1402573          	csrr	a0,mhartid
-  400184:	30200073          	mret
+  400144:	cda2d073          	csrwi	0xcda,5
+  400148:	00000073          	ecall
+  40014c:	ffc00297          	auipc	t0,0xffc00
+  400150:	eb428293          	addi	t0,t0,-332 # 0 <tohost-0x300000>
+  400154:	00028a63          	beqz	t0,400168 <reset_vector+0x11c>
+  400158:	10529073          	csrw	stvec,t0
+  40015c:	0000b2b7          	lui	t0,0xb
+  400160:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
+  400164:	30229073          	csrw	medeleg,t0
+  400168:	30005073          	csrwi	mstatus,0
+  40016c:	00002537          	lui	a0,0x2
+  400170:	30052073          	csrs	mstatus,a0
+  400174:	00305073          	csrwi	fcsr,0
+  400178:	00000297          	auipc	t0,0x0
+  40017c:	01428293          	addi	t0,t0,20 # 40018c <test_2>
+  400180:	34129073          	csrw	mepc,t0
+  400184:	f1402573          	csrr	a0,mhartid
+  400188:	30200073          	mret
 
-00400188 <test_2>:
+0040018c <test_2>:
 
   #-------------------------------------------------------------
   # Arithmetic tests
   #-------------------------------------------------------------
 
-  TEST_FCLASS_D( 2, 1 << 0, 0xfff0000000000000 )
-  400188:	00000517          	auipc	a0,0x0
-  40018c:	18850513          	addi	a0,a0,392 # 400310 <test_2_data>
-  400190:	00053507          	fld	fa0,0(a0)
-  400194:	e2051553          	fclass.d	a0,fa0
+  TEST_FCLASS_S( 2, 1 << 0, 0xff800000 )
+  40018c:	ff800537          	lui	a0,0xff800
+  400190:	f0050553          	fmv.w.x	fa0,a0
+  400194:	e0051553          	fclass.s	a0,fa0
   400198:	00100393          	li	t2,1
   40019c:	00200193          	li	gp,2
-  4001a0:	10751263          	bne	a0,t2,4002a4 <fail>
+  4001a0:	0e751663          	bne	a0,t2,40028c <fail>
 
 004001a4 <test_3>:
-  TEST_FCLASS_D( 3, 1 << 1, 0xbff0000000000000 )
-  4001a4:	00000517          	auipc	a0,0x0
-  4001a8:	17450513          	addi	a0,a0,372 # 400318 <test_3_data>
-  4001ac:	00053507          	fld	fa0,0(a0)
-  4001b0:	e2051553          	fclass.d	a0,fa0
-  4001b4:	00200393          	li	t2,2
-  4001b8:	00300193          	li	gp,3
-  4001bc:	0e751463          	bne	a0,t2,4002a4 <fail>
+  TEST_FCLASS_S( 3, 1 << 1, 0xbf800000 )
+  4001a4:	bf800537          	lui	a0,0xbf800
+  4001a8:	f0050553          	fmv.w.x	fa0,a0
+  4001ac:	e0051553          	fclass.s	a0,fa0
+  4001b0:	00200393          	li	t2,2
+  4001b4:	00300193          	li	gp,3
+  4001b8:	0c751a63          	bne	a0,t2,40028c <fail>
 
-004001c0 <test_4>:
-  TEST_FCLASS_D( 4, 1 << 2, 0x800fffffffffffff )
-  4001c0:	00000517          	auipc	a0,0x0
-  4001c4:	16050513          	addi	a0,a0,352 # 400320 <test_4_data>
-  4001c8:	00053507          	fld	fa0,0(a0)
-  4001cc:	e2051553          	fclass.d	a0,fa0
-  4001d0:	00400393          	li	t2,4
-  4001d4:	00400193          	li	gp,4
-  4001d8:	0c751663          	bne	a0,t2,4002a4 <fail>
+004001bc <test_4>:
+  TEST_FCLASS_S( 4, 1 << 2, 0x807fffff )
+  4001bc:	80800537          	lui	a0,0x80800
+  4001c0:	fff50513          	addi	a0,a0,-1 # 807fffff <begin_signature+0x803ffcef>
+  4001c4:	f0050553          	fmv.w.x	fa0,a0
+  4001c8:	e0051553          	fclass.s	a0,fa0
+  4001cc:	00400393          	li	t2,4
+  4001d0:	00400193          	li	gp,4
+  4001d4:	0a751c63          	bne	a0,t2,40028c <fail>
 
-004001dc <test_5>:
-  TEST_FCLASS_D( 5, 1 << 3, 0x8000000000000000 )
-  4001dc:	00000517          	auipc	a0,0x0
-  4001e0:	14c50513          	addi	a0,a0,332 # 400328 <test_5_data>
-  4001e4:	00053507          	fld	fa0,0(a0)
-  4001e8:	e2051553          	fclass.d	a0,fa0
-  4001ec:	00800393          	li	t2,8
-  4001f0:	00500193          	li	gp,5
-  4001f4:	0a751863          	bne	a0,t2,4002a4 <fail>
+004001d8 <test_5>:
+  TEST_FCLASS_S( 5, 1 << 3, 0x80000000 )
+  4001d8:	80000537          	lui	a0,0x80000
+  4001dc:	f0050553          	fmv.w.x	fa0,a0
+  4001e0:	e0051553          	fclass.s	a0,fa0
+  4001e4:	00800393          	li	t2,8
+  4001e8:	00500193          	li	gp,5
+  4001ec:	0a751063          	bne	a0,t2,40028c <fail>
 
-004001f8 <test_6>:
-  TEST_FCLASS_D( 6, 1 << 4, 0x0000000000000000 )
-  4001f8:	00000517          	auipc	a0,0x0
-  4001fc:	13850513          	addi	a0,a0,312 # 400330 <test_6_data>
-  400200:	00053507          	fld	fa0,0(a0)
-  400204:	e2051553          	fclass.d	a0,fa0
-  400208:	01000393          	li	t2,16
-  40020c:	00600193          	li	gp,6
-  400210:	08751a63          	bne	a0,t2,4002a4 <fail>
+004001f0 <test_6>:
+  TEST_FCLASS_S( 6, 1 << 4, 0x00000000 )
+  4001f0:	00000513          	li	a0,0
+  4001f4:	f0050553          	fmv.w.x	fa0,a0
+  4001f8:	e0051553          	fclass.s	a0,fa0
+  4001fc:	01000393          	li	t2,16
+  400200:	00600193          	li	gp,6
+  400204:	08751463          	bne	a0,t2,40028c <fail>
 
-00400214 <test_7>:
-  TEST_FCLASS_D( 7, 1 << 5, 0x000fffffffffffff )
-  400214:	00000517          	auipc	a0,0x0
-  400218:	12450513          	addi	a0,a0,292 # 400338 <test_7_data>
-  40021c:	00053507          	fld	fa0,0(a0)
-  400220:	e2051553          	fclass.d	a0,fa0
-  400224:	02000393          	li	t2,32
-  400228:	00700193          	li	gp,7
-  40022c:	06751c63          	bne	a0,t2,4002a4 <fail>
+00400208 <test_7>:
+  TEST_FCLASS_S( 7, 1 << 5, 0x007fffff )
+  400208:	00800537          	lui	a0,0x800
+  40020c:	fff50513          	addi	a0,a0,-1 # 7fffff <begin_signature+0x3ffcef>
+  400210:	f0050553          	fmv.w.x	fa0,a0
+  400214:	e0051553          	fclass.s	a0,fa0
+  400218:	02000393          	li	t2,32
+  40021c:	00700193          	li	gp,7
+  400220:	06751663          	bne	a0,t2,40028c <fail>
 
-00400230 <test_8>:
-  TEST_FCLASS_D( 8, 1 << 6, 0x3ff0000000000000 )
-  400230:	00000517          	auipc	a0,0x0
-  400234:	11050513          	addi	a0,a0,272 # 400340 <test_8_data>
-  400238:	00053507          	fld	fa0,0(a0)
-  40023c:	e2051553          	fclass.d	a0,fa0
-  400240:	04000393          	li	t2,64
-  400244:	00800193          	li	gp,8
-  400248:	04751e63          	bne	a0,t2,4002a4 <fail>
+00400224 <test_8>:
+  TEST_FCLASS_S( 8, 1 << 6, 0x3f800000 )
+  400224:	3f800537          	lui	a0,0x3f800
+  400228:	f0050553          	fmv.w.x	fa0,a0
+  40022c:	e0051553          	fclass.s	a0,fa0
+  400230:	04000393          	li	t2,64
+  400234:	00800193          	li	gp,8
+  400238:	04751a63          	bne	a0,t2,40028c <fail>
 
-0040024c <test_9>:
-  TEST_FCLASS_D( 9, 1 << 7, 0x7ff0000000000000 )
-  40024c:	00000517          	auipc	a0,0x0
-  400250:	0fc50513          	addi	a0,a0,252 # 400348 <test_9_data>
-  400254:	00053507          	fld	fa0,0(a0)
-  400258:	e2051553          	fclass.d	a0,fa0
-  40025c:	08000393          	li	t2,128
-  400260:	00900193          	li	gp,9
-  400264:	04751063          	bne	a0,t2,4002a4 <fail>
+0040023c <test_9>:
+  TEST_FCLASS_S( 9, 1 << 7, 0x7f800000 )
+  40023c:	7f800537          	lui	a0,0x7f800
+  400240:	f0050553          	fmv.w.x	fa0,a0
+  400244:	e0051553          	fclass.s	a0,fa0
+  400248:	08000393          	li	t2,128
+  40024c:	00900193          	li	gp,9
+  400250:	02751e63          	bne	a0,t2,40028c <fail>
 
-00400268 <test_10>:
-  TEST_FCLASS_D(10, 1 << 8, 0x7ff0000000000001 )
-  400268:	00000517          	auipc	a0,0x0
-  40026c:	0e850513          	addi	a0,a0,232 # 400350 <test_10_data>
-  400270:	00053507          	fld	fa0,0(a0)
-  400274:	e2051553          	fclass.d	a0,fa0
-  400278:	10000393          	li	t2,256
-  40027c:	00a00193          	li	gp,10
-  400280:	02751263          	bne	a0,t2,4002a4 <fail>
+00400254 <test_10>:
+  TEST_FCLASS_S(10, 1 << 8, 0x7f800001 )
+  400254:	7f800537          	lui	a0,0x7f800
+  400258:	00150513          	addi	a0,a0,1 # 7f800001 <begin_signature+0x7f3ffcf1>
+  40025c:	f0050553          	fmv.w.x	fa0,a0
+  400260:	e0051553          	fclass.s	a0,fa0
+  400264:	10000393          	li	t2,256
+  400268:	00a00193          	li	gp,10
+  40026c:	02751063          	bne	a0,t2,40028c <fail>
 
-00400284 <test_11>:
-  TEST_FCLASS_D(11, 1 << 9, 0x7ff8000000000000 )
-  400284:	00000517          	auipc	a0,0x0
-  400288:	0d450513          	addi	a0,a0,212 # 400358 <test_11_data>
-  40028c:	00053507          	fld	fa0,0(a0)
-  400290:	e2051553          	fclass.d	a0,fa0
-  400294:	20000393          	li	t2,512
-  400298:	00b00193          	li	gp,11
-  40029c:	00751463          	bne	a0,t2,4002a4 <fail>
+00400270 <test_11>:
+  TEST_FCLASS_S(11, 1 << 9, 0x7fc00000 )
+  400270:	7fc00537          	lui	a0,0x7fc00
+  400274:	f0050553          	fmv.w.x	fa0,a0
+  400278:	e0051553          	fclass.s	a0,fa0
+  40027c:	20000393          	li	t2,512
+  400280:	00b00193          	li	gp,11
+  400284:	00751463          	bne	a0,t2,40028c <fail>
 
   TEST_PASSFAIL
-  4002a0:	02301063          	bne	zero,gp,4002c0 <pass>
+  400288:	02301463          	bne	zero,gp,4002b0 <pass>
 
-004002a4 <fail>:
-  4002a4:	0ff0000f          	fence
-  4002a8:	00018063          	beqz	gp,4002a8 <fail+0x4>
-  4002ac:	00119193          	slli	gp,gp,0x1
-  4002b0:	0011e193          	ori	gp,gp,1
-  4002b4:	05d00893          	li	a7,93
-  4002b8:	00018513          	mv	a0,gp
-  4002bc:	00000073          	ecall
+0040028c <fail>:
+  40028c:	0ff0000f          	fence
+  400290:	00018063          	beqz	gp,400290 <fail+0x4>
+  400294:	00119193          	slli	gp,gp,0x1
+  400298:	0011e193          	ori	gp,gp,1
+  40029c:	05d00893          	li	a7,93
+  4002a0:	00018513          	mv	a0,gp
+  4002a4:	cda4d073          	csrwi	0xcda,9
+  4002a8:	cd90e073          	csrsi	0xcd9,1
+  4002ac:	00000073          	ecall
 
-004002c0 <pass>:
-  4002c0:	0ff0000f          	fence
-  4002c4:	00100193          	li	gp,1
-  4002c8:	05d00893          	li	a7,93
-  4002cc:	00000513          	li	a0,0
-  4002d0:	00000073          	ecall
+004002b0 <pass>:
+  4002b0:	0ff0000f          	fence
+  4002b4:	00100193          	li	gp,1
+  4002b8:	05d00893          	li	a7,93
+  4002bc:	00000513          	li	a0,0
+  4002c0:	cda2d073          	csrwi	0xcda,5
+  4002c4:	00000073          	ecall
 
 RVTEST_CODE_END
-  4002d4:	c0001073          	unimp
+  4002c8:	c0001073          	unimp
 	...

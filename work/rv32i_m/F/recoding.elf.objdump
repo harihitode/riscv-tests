@@ -1,14 +1,6 @@
 
-/home/hamada/risc-v_git/riscv-tests/work/rv32i_m/F/recoding.elf:     ファイル形式 elf32-littleriscv
+/home/hamada/risc-v_git/riscv-tests_C/riscv-tests/work/rv32i_m/F/recoding.elf:     ファイル形式 elf32-littleriscv
 
-
-セクション .tohost の逆アセンブル:
-
-00300000 <tohost>:
-	...
-
-00300040 <fromhost>:
-	...
 
 セクション .text.init の逆アセンブル:
 
@@ -24,7 +16,7 @@
   400018:	00b00f93          	li	t6,11
   40001c:	03ff0263          	beq	t5,t6,400040 <write_tohost>
   400020:	ffc00f17          	auipc	t5,0xffc00
-  400024:	fe0f0f13          	addi	t5,t5,-32 # 0 <tohost-0x300000>
+  400024:	fe0f0f13          	addi	t5,t5,-32 # 0 <_start-0x400000>
   400028:	000f0463          	beqz	t5,400030 <trap_vector+0x2c>
   40002c:	000f0067          	jr	t5
   400030:	34202f73          	csrr	t5,mcause
@@ -35,8 +27,8 @@
   40003c:	5391e193          	ori	gp,gp,1337
 
 00400040 <write_tohost>:
-  400040:	fff00f17          	auipc	t5,0xfff00
-  400044:	fc3f2023          	sw	gp,-64(t5) # 300000 <tohost>
+  400040:	00000f17          	auipc	t5,0x0
+  400044:	2c3f2023          	sw	gp,704(t5) # 400300 <tohost>
   400048:	ff9ff06f          	j	400040 <write_tohost>
 
 0040004c <reset_vector>:
@@ -81,7 +73,7 @@
   4000e4:	02028293          	addi	t0,t0,32 # 400100 <reset_vector+0xb4>
   4000e8:	30529073          	csrw	mtvec,t0
   4000ec:	800002b7          	lui	t0,0x80000
-  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffd0f>
+  4000f0:	fff28293          	addi	t0,t0,-1 # 7fffffff <_end+0x7fbffcb7>
   4000f4:	3b029073          	csrw	pmpaddr0,t0
   4000f8:	01f00293          	li	t0,31
   4000fc:	3a029073          	csrw	pmpcfg0,t0
@@ -97,120 +89,124 @@
   400124:	30529073          	csrw	mtvec,t0
   400128:	00100513          	li	a0,1
   40012c:	01f51513          	slli	a0,a0,0x1f
-  400130:	00054c63          	bltz	a0,400148 <reset_vector+0xfc>
+  400130:	00054e63          	bltz	a0,40014c <reset_vector+0x100>
   400134:	0ff0000f          	fence
   400138:	00100193          	li	gp,1
   40013c:	05d00893          	li	a7,93
   400140:	00000513          	li	a0,0
-  400144:	00000073          	ecall
-  400148:	ffc00297          	auipc	t0,0xffc00
-  40014c:	eb828293          	addi	t0,t0,-328 # 0 <tohost-0x300000>
-  400150:	00028a63          	beqz	t0,400164 <reset_vector+0x118>
-  400154:	10529073          	csrw	stvec,t0
-  400158:	0000b2b7          	lui	t0,0xb
-  40015c:	10928293          	addi	t0,t0,265 # b109 <tohost-0x2f4ef7>
-  400160:	30229073          	csrw	medeleg,t0
-  400164:	30005073          	csrwi	mstatus,0
-  400168:	00002537          	lui	a0,0x2
-  40016c:	30052073          	csrs	mstatus,a0
-  400170:	00305073          	csrwi	fcsr,0
-  400174:	00000297          	auipc	t0,0x0
-  400178:	01428293          	addi	t0,t0,20 # 400188 <reset_vector+0x13c>
-  40017c:	34129073          	csrw	mepc,t0
-  400180:	f1402573          	csrr	a0,mhartid
-  400184:	30200073          	mret
-  400188:	00000517          	auipc	a0,0x0
-  40018c:	14853007          	fld	ft0,328(a0) # 4002d0 <begin_signature>
-  400190:	00000517          	auipc	a0,0x0
-  400194:	14853087          	fld	ft1,328(a0) # 4002d8 <three>
-  400198:	1200f0d3          	fmul.d	ft1,ft1,ft0
+  400144:	cda2d073          	csrwi	0xcda,5
+  400148:	00000073          	ecall
+  40014c:	ffc00297          	auipc	t0,0xffc00
+  400150:	eb428293          	addi	t0,t0,-332 # 0 <_start-0x400000>
+  400154:	00028a63          	beqz	t0,400168 <reset_vector+0x11c>
+  400158:	10529073          	csrw	stvec,t0
+  40015c:	0000b2b7          	lui	t0,0xb
+  400160:	10928293          	addi	t0,t0,265 # b109 <_start-0x3f4ef7>
+  400164:	30229073          	csrw	medeleg,t0
+  400168:	30005073          	csrwi	mstatus,0
+  40016c:	00002537          	lui	a0,0x2
+  400170:	30052073          	csrs	mstatus,a0
+  400174:	00305073          	csrwi	fcsr,0
+  400178:	00000297          	auipc	t0,0x0
+  40017c:	01428293          	addi	t0,t0,20 # 40018c <reset_vector+0x140>
+  400180:	34129073          	csrw	mepc,t0
+  400184:	f1402573          	csrr	a0,mhartid
+  400188:	30200073          	mret
+  40018c:	00000517          	auipc	a0,0x0
+  400190:	14453007          	fld	ft0,324(a0) # 4002d0 <begin_signature>
+  400194:	00000517          	auipc	a0,0x0
+  400198:	14453087          	fld	ft1,324(a0) # 4002d8 <three>
+  40019c:	1200f0d3          	fmul.d	ft1,ft1,ft0
 
-0040019c <test_2>:
-  40019c:	a2102553          	feq.d	a0,ft0,ft1
-  4001a0:	00100393          	li	t2,1
-  4001a4:	00200193          	li	gp,2
-  4001a8:	0c751663          	bne	a0,t2,400274 <fail>
+004001a0 <test_2>:
+  4001a0:	a2102553          	feq.d	a0,ft0,ft1
+  4001a4:	00100393          	li	t2,1
+  4001a8:	00200193          	li	gp,2
+  4001ac:	0c751663          	bne	a0,t2,400278 <fail>
 
-004001ac <test_3>:
-  4001ac:	a2100553          	fle.d	a0,ft0,ft1
-  4001b0:	00100393          	li	t2,1
-  4001b4:	00300193          	li	gp,3
-  4001b8:	0a751e63          	bne	a0,t2,400274 <fail>
+004001b0 <test_3>:
+  4001b0:	a2100553          	fle.d	a0,ft0,ft1
+  4001b4:	00100393          	li	t2,1
+  4001b8:	00300193          	li	gp,3
+  4001bc:	0a751e63          	bne	a0,t2,400278 <fail>
 
-004001bc <test_4>:
-  4001bc:	a2101553          	flt.d	a0,ft0,ft1
-  4001c0:	00000393          	li	t2,0
-  4001c4:	00400193          	li	gp,4
-  4001c8:	0a751663          	bne	a0,t2,400274 <fail>
-  4001cc:	d2000053          	fcvt.d.w	ft0,zero
-  4001d0:	00100513          	li	a0,1
-  4001d4:	d20500d3          	fcvt.d.w	ft1,a0
-  4001d8:	1200f0d3          	fmul.d	ft1,ft1,ft0
+004001c0 <test_4>:
+  4001c0:	a2101553          	flt.d	a0,ft0,ft1
+  4001c4:	00000393          	li	t2,0
+  4001c8:	00400193          	li	gp,4
+  4001cc:	0a751663          	bne	a0,t2,400278 <fail>
+  4001d0:	d2000053          	fcvt.d.w	ft0,zero
+  4001d4:	00100513          	li	a0,1
+  4001d8:	d20500d3          	fcvt.d.w	ft1,a0
+  4001dc:	1200f0d3          	fmul.d	ft1,ft1,ft0
 
-004001dc <test_5>:
-  4001dc:	a2102553          	feq.d	a0,ft0,ft1
-  4001e0:	00100393          	li	t2,1
-  4001e4:	00500193          	li	gp,5
-  4001e8:	08751663          	bne	a0,t2,400274 <fail>
+004001e0 <test_5>:
+  4001e0:	a2102553          	feq.d	a0,ft0,ft1
+  4001e4:	00100393          	li	t2,1
+  4001e8:	00500193          	li	gp,5
+  4001ec:	08751663          	bne	a0,t2,400278 <fail>
 
-004001ec <test_6>:
-  4001ec:	a2100553          	fle.d	a0,ft0,ft1
-  4001f0:	00100393          	li	t2,1
-  4001f4:	00600193          	li	gp,6
-  4001f8:	06751e63          	bne	a0,t2,400274 <fail>
+004001f0 <test_6>:
+  4001f0:	a2100553          	fle.d	a0,ft0,ft1
+  4001f4:	00100393          	li	t2,1
+  4001f8:	00600193          	li	gp,6
+  4001fc:	06751e63          	bne	a0,t2,400278 <fail>
 
-004001fc <test_7>:
-  4001fc:	a2101553          	flt.d	a0,ft0,ft1
-  400200:	00000393          	li	t2,0
-  400204:	00700193          	li	gp,7
-  400208:	06751663          	bne	a0,t2,400274 <fail>
-  40020c:	00000517          	auipc	a0,0x0
-  400210:	0d452007          	flw	ft0,212(a0) # 4002e0 <big>
-  400214:	00000517          	auipc	a0,0x0
-  400218:	0d453087          	fld	ft1,212(a0) # 4002e8 <tiny>
-  40021c:	4010f0d3          	fcvt.s.d	ft1,ft1
-  400220:	10107053          	fmul.s	ft0,ft0,ft1
-  400224:	e0000553          	fmv.x.w	a0,ft0
-  400228:	00000597          	auipc	a1,0x0
-  40022c:	0bc5a583          	lw	a1,188(a1) # 4002e4 <small>
+00400200 <test_7>:
+  400200:	a2101553          	flt.d	a0,ft0,ft1
+  400204:	00000393          	li	t2,0
+  400208:	00700193          	li	gp,7
+  40020c:	06751663          	bne	a0,t2,400278 <fail>
+  400210:	00000517          	auipc	a0,0x0
+  400214:	0d052007          	flw	ft0,208(a0) # 4002e0 <big>
+  400218:	00000517          	auipc	a0,0x0
+  40021c:	0d053087          	fld	ft1,208(a0) # 4002e8 <tiny>
+  400220:	4010f0d3          	fcvt.s.d	ft1,ft1
+  400224:	10107053          	fmul.s	ft0,ft0,ft1
+  400228:	e0000553          	fmv.x.w	a0,ft0
+  40022c:	00000597          	auipc	a1,0x0
+  400230:	0b85a583          	lw	a1,184(a1) # 4002e4 <small>
 
-00400230 <test_10>:
-  400230:	40b50533          	sub	a0,a0,a1
-  400234:	00000393          	li	t2,0
-  400238:	00a00193          	li	gp,10
-  40023c:	02751c63          	bne	a0,t2,400274 <fail>
-  400240:	00000517          	auipc	a0,0x0
-  400244:	09852007          	flw	ft0,152(a0) # 4002d8 <three>
-  400248:	000070d3          	fadd.s	ft1,ft0,ft0
-  40024c:	00007053          	fadd.s	ft0,ft0,ft0
-  400250:	00000517          	auipc	a0,0x0
-  400254:	08053c27          	fsd	ft0,152(a0) # 4002e8 <tiny>
-  400258:	00000517          	auipc	a0,0x0
-  40025c:	09053007          	fld	ft0,144(a0) # 4002e8 <tiny>
+00400234 <test_10>:
+  400234:	40b50533          	sub	a0,a0,a1
+  400238:	00000393          	li	t2,0
+  40023c:	00a00193          	li	gp,10
+  400240:	02751c63          	bne	a0,t2,400278 <fail>
+  400244:	00000517          	auipc	a0,0x0
+  400248:	09452007          	flw	ft0,148(a0) # 4002d8 <three>
+  40024c:	000070d3          	fadd.s	ft1,ft0,ft0
+  400250:	00007053          	fadd.s	ft0,ft0,ft0
+  400254:	00000517          	auipc	a0,0x0
+  400258:	08053a27          	fsd	ft0,148(a0) # 4002e8 <tiny>
+  40025c:	00000517          	auipc	a0,0x0
+  400260:	08c53007          	fld	ft0,140(a0) # 4002e8 <tiny>
 
-00400260 <test_20>:
-  400260:	a0102553          	feq.s	a0,ft0,ft1
-  400264:	00100393          	li	t2,1
-  400268:	01400193          	li	gp,20
-  40026c:	00751463          	bne	a0,t2,400274 <fail>
-  400270:	02301063          	bne	zero,gp,400290 <pass>
+00400264 <test_20>:
+  400264:	a0102553          	feq.s	a0,ft0,ft1
+  400268:	00100393          	li	t2,1
+  40026c:	01400193          	li	gp,20
+  400270:	00751463          	bne	a0,t2,400278 <fail>
+  400274:	02301463          	bne	zero,gp,40029c <pass>
 
-00400274 <fail>:
-  400274:	0ff0000f          	fence
-  400278:	00018063          	beqz	gp,400278 <fail+0x4>
-  40027c:	00119193          	slli	gp,gp,0x1
-  400280:	0011e193          	ori	gp,gp,1
-  400284:	05d00893          	li	a7,93
-  400288:	00018513          	mv	a0,gp
-  40028c:	00000073          	ecall
+00400278 <fail>:
+  400278:	0ff0000f          	fence
+  40027c:	00018063          	beqz	gp,40027c <fail+0x4>
+  400280:	00119193          	slli	gp,gp,0x1
+  400284:	0011e193          	ori	gp,gp,1
+  400288:	05d00893          	li	a7,93
+  40028c:	00018513          	mv	a0,gp
+  400290:	cda4d073          	csrwi	0xcda,9
+  400294:	cd90e073          	csrsi	0xcd9,1
+  400298:	00000073          	ecall
 
-00400290 <pass>:
-  400290:	0ff0000f          	fence
-  400294:	00100193          	li	gp,1
-  400298:	05d00893          	li	a7,93
-  40029c:	00000513          	li	a0,0
-  4002a0:	00000073          	ecall
-  4002a4:	c0001073          	unimp
+0040029c <pass>:
+  40029c:	0ff0000f          	fence
+  4002a0:	00100193          	li	gp,1
+  4002a4:	05d00893          	li	a7,93
+  4002a8:	00000513          	li	a0,0
+  4002ac:	cda2d073          	csrwi	0xcda,5
+  4002b0:	00000073          	ecall
+  4002b4:	c0001073          	unimp
 	...
 
 セクション .data の逆アセンブル:
@@ -241,21 +237,29 @@
   4002ec:	c8f8                	sw	a4,84(s1)
   4002ee:	37b4                	fld	fa3,104(a5)
 
+セクション .tohost の逆アセンブル:
+
+00400300 <tohost>:
+	...
+
+00400340 <fromhost>:
+	...
+
 セクション .riscv.attributes の逆アセンブル:
 
 00000000 <.riscv.attributes>:
-   0:	3141                	jal	fffffc80 <_end+0xffbff990>
+   0:	3141                	jal	fffffc80 <_end+0xffbff938>
    2:	0000                	unimp
    4:	7200                	flw	fs0,32(a2)
    6:	7369                	lui	t1,0xffffa
-   8:	01007663          	bgeu	zero,a6,14 <tohost-0x2fffec>
+   8:	01007663          	bgeu	zero,a6,14 <_start-0x3fffec>
    c:	00000027          	0x27
   10:	7205                	lui	tp,0xfffe1
   12:	3376                	fld	ft6,376(sp)
   14:	6932                	flw	fs2,12(sp)
   16:	7032                	flw	ft0,44(sp)
   18:	5f30                	lw	a2,120(a4)
-  1a:	326d                	jal	fffff9c4 <_end+0xffbff6d4>
+  1a:	326d                	jal	fffff9c4 <_end+0xffbff67c>
   1c:	3070                	fld	fa2,224(s0)
   1e:	615f 7032 5f30      	0x5f307032615f
   24:	3266                	fld	ft4,120(sp)
@@ -274,7 +278,7 @@
    8:	002e                	c.slli	zero,0xb
    a:	0000                	unimp
    c:	0101                	addi	sp,sp,0
-   e:	fb01                	bnez	a4,ffffff1e <_end+0xffbffc2e>
+   e:	fb01                	bnez	a4,ffffff1e <_end+0xffbffbd6>
   10:	0d0e                	slli	s10,s10,0x3
   12:	0100                	addi	s0,sp,128
   14:	0101                	addi	sp,sp,0
@@ -297,7 +301,7 @@
   3e:	4000                	lw	s0,0(s0)
   40:	0300                	addi	s0,sp,384
   42:	0110                	addi	a2,sp,128
-  44:	88090303          	lb	t1,-1920(s2)
+  44:	8c090303          	lb	t1,-1856(s2)
   48:	0101                	addi	sp,sp,0
   4a:	08090103          	lb	sp,128(s2)
   4e:	0100                	addi	s0,sp,128
@@ -351,7 +355,7 @@
   de:	0100                	addi	s0,sp,128
   e0:	10090203          	lb	tp,256(s2)
   e4:	0100                	addi	s0,sp,128
-  e6:	34090203          	lb	tp,832(s2)
+  e6:	40090203          	lb	tp,1024(s2)
   ea:	0100                	addi	s0,sp,128
   ec:	0409                	addi	s0,s0,2
   ee:	0000                	unimp
@@ -362,7 +366,7 @@
 00000000 <.debug_line_str>:
    0:	00637273          	csrrci	tp,0x6,6
    4:	6572                	flw	fa0,28(sp)
-   6:	69646f63          	bltu	s0,s6,6a4 <tohost-0x2ff95c>
+   6:	69646f63          	bltu	s0,s6,6a4 <_start-0x3ff95c>
    a:	676e                	flw	fa4,216(sp)
    c:	532e                	lw	t1,232(sp)
 	...
@@ -380,12 +384,12 @@
    e:	0000                	unimp
   10:	0000                	unimp
   12:	4000                	lw	s0,0(s0)
-  14:	e400                	fsw	fs0,8(s0)
+  14:	f400                	fsw	fs0,40(s0)
   16:	0005                	c.nop	1
   18:	0000                	unimp
   1a:	0b00                	addi	s0,sp,400
   1c:	0000                	unimp
-  1e:	4a00                	lw	s0,16(a2)
+  1e:	5800                	lw	s0,48(s0)
   20:	0000                	unimp
   22:	0100                	addi	s0,sp,128
   24:	80              	Address 0x0000000000000024 is out of bounds.
@@ -416,14 +420,14 @@
    e:	0000                	unimp
   10:	0000                	unimp
   12:	0040                	addi	s0,sp,4
-  14:	02a8                	addi	a0,sp,328
+  14:	02b8                	addi	a4,sp,328
 	...
 
 セクション .debug_str の逆アセンブル:
 
 00000000 <.debug_str>:
    0:	6572                	flw	fa0,28(sp)
-   2:	69646f63          	bltu	s0,s6,6a0 <tohost-0x2ff960>
+   2:	69646f63          	bltu	s0,s6,6a0 <_start-0x3ff960>
    6:	676e                	flw	fa4,216(sp)
    8:	532e                	lw	t1,232(sp)
    a:	2f00                	fld	fs0,24(a4)
@@ -431,27 +435,31 @@
    e:	656d                	lui	a0,0x1b
   10:	6d61682f          	0x6d61682f
   14:	6461                	lui	s0,0x18
-  16:	2f61                	jal	7ae <tohost-0x2ff852>
+  16:	2f61                	jal	7ae <_start-0x3ff852>
   18:	6972                	flw	fs2,28(sp)
   1a:	762d6373          	csrrsi	t1,0x762,26
   1e:	675f 7469 722f      	0x722f7469675f
   24:	7369                	lui	t1,0xffffa
-  26:	742d7663          	bgeu	s10,sp,772 <tohost-0x2ff88e>
+  26:	742d7663          	bgeu	s10,sp,772 <_start-0x3ff88e>
   2a:	7365                	lui	t1,0xffff9
   2c:	7374                	flw	fa3,100(a4)
-  2e:	7369722f          	0x7369722f
-  32:	742d7663          	bgeu	s10,sp,77e <tohost-0x2ff882>
-  36:	7365                	lui	t1,0xffff9
-  38:	2d74                	fld	fa3,216(a0)
-  3a:	74697573          	csrrci	a0,0x746,18
-  3e:	2f65                	jal	7f6 <tohost-0x2ff80a>
-  40:	7672                	flw	fa2,60(sp)
-  42:	5f693233          	0x5f693233
-  46:	2f6d                	jal	800 <tohost-0x2ff800>
-  48:	0046                	c.slli	zero,0x11
-  4a:	20554e47          	fmsub.s	ft8,fa0,ft5,ft4,rmm
-  4e:	5341                	li	t1,-16
-  50:	3220                	fld	fs0,96(a2)
-  52:	332e                	fld	ft6,232(sp)
-  54:	2e36                	fld	ft8,328(sp)
-  56:	0031                	c.nop	12
+  2e:	435f 722f 7369      	0x7369722f435f
+  34:	742d7663          	bgeu	s10,sp,780 <_start-0x3ff880>
+  38:	7365                	lui	t1,0xffff9
+  3a:	7374                	flw	fa3,100(a4)
+  3c:	7369722f          	0x7369722f
+  40:	742d7663          	bgeu	s10,sp,78c <_start-0x3ff874>
+  44:	7365                	lui	t1,0xffff9
+  46:	2d74                	fld	fa3,216(a0)
+  48:	74697573          	csrrci	a0,0x746,18
+  4c:	2f65                	jal	804 <_start-0x3ff7fc>
+  4e:	7672                	flw	fa2,60(sp)
+  50:	5f693233          	0x5f693233
+  54:	2f6d                	jal	80e <_start-0x3ff7f2>
+  56:	0046                	c.slli	zero,0x11
+  58:	20554e47          	fmsub.s	ft8,fa0,ft5,ft4,rmm
+  5c:	5341                	li	t1,-16
+  5e:	3220                	fld	fs0,96(a2)
+  60:	332e                	fld	ft6,232(sp)
+  62:	2e36                	fld	ft8,328(sp)
+  64:	0031                	c.nop	12

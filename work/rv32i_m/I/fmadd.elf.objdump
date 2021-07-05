@@ -1,5 +1,5 @@
 
-/home/hamada/risc-v_git/riscv-tests/work/rv32i_m/I/fmadd.elf:     ファイル形式 elf32-littleriscv
+/home/hamada/risc-v_git/riscv-tests_C/riscv-tests/work/rv32i_m/I/fmadd.elf:     ファイル形式 elf32-littleriscv
 
 
 セクション .tohost の逆アセンブル:
@@ -696,7 +696,7 @@
   18:	0000                	unimp
   1a:	0800                	addi	s0,sp,16
   1c:	0000                	unimp
-  1e:	4700                	lw	s0,8(a4)
+  1e:	5500                	lw	s0,40(a0)
   20:	0000                	unimp
   22:	0100                	addi	s0,sp,128
   24:	80              	Address 0x0000000000000024 is out of bounds.
@@ -747,18 +747,22 @@
   20:	6972                	flw	fs2,28(sp)
   22:	2d766373          	csrrsi	t1,0x2d7,12
   26:	6574                	flw	fa3,76(a0)
-  28:	2f737473          	csrrci	s0,0x2f7,6
-  2c:	6972                	flw	fs2,28(sp)
-  2e:	2d766373          	csrrsi	t1,0x2d7,12
-  32:	6574                	flw	fa3,76(a0)
-  34:	732d7473          	csrrci	s0,0x732,26
-  38:	6975                	lui	s2,0x1d
-  3a:	6574                	flw	fa3,76(a0)
-  3c:	3376722f          	0x3376722f
-  40:	6932                	flw	fs2,12(sp)
-  42:	6d5f 492f 4700      	0x4700492f6d5f
-  48:	554e                	lw	a0,240(sp)
-  4a:	4120                	lw	s0,64(a0)
-  4c:	2e322053          	0x2e322053
-  50:	312e3633          	0x312e3633
+  28:	5f737473          	csrrci	s0,0x5f7,6
+  2c:	69722f43          	fmadd.s	ft10,ft4,fs7,fa3,rdn
+  30:	2d766373          	csrrsi	t1,0x2d7,12
+  34:	6574                	flw	fa3,76(a0)
+  36:	2f737473          	csrrci	s0,0x2f7,6
+  3a:	6972                	flw	fs2,28(sp)
+  3c:	2d766373          	csrrsi	t1,0x2d7,12
+  40:	6574                	flw	fa3,76(a0)
+  42:	732d7473          	csrrci	s0,0x732,26
+  46:	6975                	lui	s2,0x1d
+  48:	6574                	flw	fa3,76(a0)
+  4a:	3376722f          	0x3376722f
+  4e:	6932                	flw	fs2,12(sp)
+  50:	6d5f 492f 4700      	0x4700492f6d5f
+  56:	554e                	lw	a0,240(sp)
+  58:	4120                	lw	s0,64(a0)
+  5a:	2e322053          	0x2e322053
+  5e:	312e3633          	0x312e3633
 	...

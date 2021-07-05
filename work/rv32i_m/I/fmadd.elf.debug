@@ -1,5 +1,5 @@
 
-/home/hamada/risc-v_git/riscv-tests/work/rv32i_m/I/fmadd.elf:     ファイル形式 elf32-littleriscv
+/home/hamada/risc-v_git/riscv-tests_C/riscv-tests/work/rv32i_m/I/fmadd.elf:     ファイル形式 elf32-littleriscv
 
 
 セクション .text.init の逆アセンブル:

@@ -11,7 +11,7 @@ ELF ヘッダ:
   エントリポイントアドレス:          0x427ce4
   プログラムヘッダ始点:            52 (バイト)
   セクションヘッダ始点:              223304 (バイト)
-  フラグ:                            0x0
+  フラグ:                            0x2, single-float ABI
   Size of this header:               52 (bytes)
   Size of program headers:           32 (bytes)
   Number of program headers:         3
@@ -84,7 +84,7 @@ Symbol table '.symtab' contains 629 entries:
     13: 00000000     0 SECTION LOCAL  DEFAULT   13 
     14: 00000000     0 SECTION LOCAL  DEFAULT   14 
     15: 00000000     0 SECTION LOCAL  DEFAULT   15 
-    16: 00000000     0 FILE    LOCAL  DEFAULT  ABS cc9jBRq9.o
+    16: 00000000     0 FILE    LOCAL  DEFAULT  ABS ccLvrMq6.o
     17: 00427ce4     0 NOTYPE  LOCAL  DEFAULT    3 FN_WriteStr
     18: 00427d04     0 NOTYPE  LOCAL  DEFAULT    3 FN_WriteStr_END
     19: 00427cf0     0 NOTYPE  LOCAL  DEFAULT    3 FN_WriteStr_BEGIN

@@ -239,6 +239,7 @@ reset_vector:                                                           \
         li TESTNUM, 1;                                                  \
         li a7, 93;                                                      \
         li a0, 0;                                                       \
+        csrrwi x0, 0xcda, 0x5;                                                       \
         ecall
 
 #define TESTNUM gp
@@ -249,6 +250,8 @@ reset_vector:                                                           \
         or TESTNUM, TESTNUM, 1;                                         \
         li a7, 93;                                                      \
         addi a0, TESTNUM, 0;                                            \
+        csrrwi x0, 0xcda, 0x9;                                            \
+        csrrsi x0, 0xcd9, 0x1;                                              \
         ecall
 
 //-----------------------------------------------------------------------
