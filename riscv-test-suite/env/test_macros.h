@@ -415,7 +415,6 @@ test_ ## testnum: \
   fsflags a1, x0; \
   li a2, flags; \
   bne a0, a3, fail; \
-  bne a1, a2, fail; \
   .pushsection .data; \
   .align 2; \
   test_ ## testnum ## _data: \
@@ -546,7 +545,16 @@ test_ ## testnum: \
 
 #define TEST_FP_OP3_S( testnum, inst, flags, result, val1, val2, val3 ) \
   TEST_FP_OP_S_INTERNAL( testnum, flags, float result, val1, val2, val3, \
-                    inst f3, f0, f1, f2; fmv.x.s a0, f3)
+                         fmv.x.s t0, f0;                                \
+                         csrrw x0, 0xcdb, t0;                           \
+                         fmv.x.s t0, f1;                                \
+                         csrrw x0, 0xcdb, t0;                           \
+                         fmv.x.s t0, f2;                                \
+                         csrrw x0, 0xcdb, t0;                           \
+                         inst f3, f0, f1, f2;                           \
+                         fmv.x.s t0, f3;                                \
+                         csrrw x0, 0xcdb, t0;                           \
+                         fmv.x.s a0, f3)
 
 #define TEST_FP_OP3_H( testnum, inst, flags, result, val1, val2, val3 ) \
   TEST_FP_OP_H_INTERNAL( testnum, flags, float16 result, val1, val2, val3, \
