@@ -264,8 +264,9 @@ reset_vector:                                                           \
         .align 6; .global tohost; tohost: .dword 0;                     \
         .align 6; .global fromhost; fromhost: .dword 0;                 \
         .popsection;                                                    \
+        .pushsection .signature,"aw",@progbits;                         \
         .align 4; .global begin_signature; begin_signature:
 
-#define RVTEST_DATA_END .align 4; .global end_signature; end_signature:
+#define RVTEST_DATA_END .align 4; .global end_signature; end_signature: .popsection;
 
 #endif
