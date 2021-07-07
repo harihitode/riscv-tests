@@ -3,7 +3,6 @@
 #ifndef _ENV_PHYSICAL_SINGLE_CORE_H
 #define _ENV_PHYSICAL_SINGLE_CORE_H
 
-//#include "../encoding.h"
 #include "./encoding.h"
 
 //-----------------------------------------------------------------------
@@ -239,8 +238,8 @@ reset_vector:                                                           \
         li TESTNUM, 1;                                                  \
         li a7, 93;                                                      \
         li a0, 0;                                                       \
-        csrrwi x0, 0xcda, 0x5;                                                       \
-        ecall
+        csrrwi x0, 0xcda, 0x0;                                          \
+        csrrsi x0, 0xcd9, 0x1
 
 #define TESTNUM gp
 #define RVTEST_FAIL                                                     \
@@ -250,9 +249,8 @@ reset_vector:                                                           \
         or TESTNUM, TESTNUM, 1;                                         \
         li a7, 93;                                                      \
         addi a0, TESTNUM, 0;                                            \
-        csrrwi x0, 0xcda, 0x9;                                            \
-        csrrsi x0, 0xcd9, 0x1;                                              \
-        ecall
+        csrrwi x0, 0xcda, 0x1;                                          \
+        csrrsi x0, 0xcd9, 0x1
 
 //-----------------------------------------------------------------------
 // Data Section Macro
