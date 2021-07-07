@@ -14,7 +14,9 @@ RVTEST_RV64U
 RVTEST_CODE_BEGIN
 
 # get a unique core id
-csrrw a0, 0x0F14, x0
+la a0, coreid
+csrrw a1, 0x0F14, x0
+sw a1, 0(a0)
 li a1, 1
 amoadd.w a2, a1, (a0)
 
@@ -30,11 +32,13 @@ TEST_CASE( 2, a4, 1, \
   la a0, foo; \
   li a5, 0xdeadbeef; \
   sc.w a4, a5, (a0); \
+  csrrw x0, 0xcdb, a4           ; \
 )
 
 # make sure the failing sc did not commit into memory
 TEST_CASE( 3, a4, 0, \
   lw a4, foo; \
+  csrrw x0, 0xcdb, a4           ; \
 )
 
 #
@@ -61,6 +65,7 @@ addi a2, a2, 1
 1: lr.w a4, (a0)
 add a4, a4, a2
 sc.w a4, a4, (a0)
+csrrw x0, 0xcdb, a1
 bnez a4, 1b
 add a1, a1, -1
 bnez a1, 1b
@@ -70,16 +75,20 @@ la a0, barrier
 li a1, 1
 amoadd.w x0, a1, (a0)
 1: lw a1, (a0)
+csrrw x0, 0xcdb, a1
+csrrw x0, 0xcdb, a3
 blt a1, a3, 1b
 fence
 
 # expected result is 512*ncores*(ncores+1)
 TEST_CASE( 5, a0, 0, \
   lw a0, foo; \
+  csrrw x0, 0xcdb, a0           ;\
   slli a1, a3, LOG_ITERATIONS-1; \
 1:sub a0, a0, a1; \
   addi a3, a3, -1; \
-  bgez a3, 1b
+  bgez a3, 1b    ; \
+  csrrw x0, 0xcdb, a0
 )
 
 # make sure that sc-after-successful-sc fails.
@@ -96,13 +105,14 @@ TEST_PASSFAIL
 RVTEST_CODE_END
 
   .bss
+coreid: .word 0
 barrier: .word 0
+foo: .word 0
   .data
 RVTEST_DATA_BEGIN
 
   TEST_DATA
 
-foo: .word 0
 .skip 1024
 fooTest3: .word 0
 RVTEST_DATA_END
