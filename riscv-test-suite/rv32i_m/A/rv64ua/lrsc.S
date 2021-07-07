@@ -14,7 +14,7 @@ RVTEST_RV64U
 RVTEST_CODE_BEGIN
 
 # get a unique core id
-la a0, coreid
+csrrw a0, 0x0F14, x0
 li a1, 1
 amoadd.w a2, a1, (a0)
 
@@ -95,13 +95,13 @@ TEST_PASSFAIL
 
 RVTEST_CODE_END
 
+  .bss
+barrier: .word 0
   .data
 RVTEST_DATA_BEGIN
 
   TEST_DATA
 
-coreid: .word 0
-barrier: .word 0
 foo: .word 0
 .skip 1024
 fooTest3: .word 0
