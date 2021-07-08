@@ -63,6 +63,7 @@ la a0, foo
 li a1, 1<<LOG_ITERATIONS
 addi a2, a2, 1
 1: lr.w a4, (a0)
+csrrw x0, 0xcdb, a4
 add a4, a4, a2
 sc.w a4, a4, (a0)
 csrrw x0, 0xcdb, a1
@@ -107,6 +108,11 @@ RVTEST_CODE_END
   .bss
 coreid: .word 0
 barrier: .word 0
+hoo0: .word 0
+hoo1: .word 0
+hoo2: .word 0
+hoo3: .word 0
+hoo4: .word 0
 foo: .word 0
   .data
 RVTEST_DATA_BEGIN
