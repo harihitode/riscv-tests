@@ -12,9 +12,12 @@
 
 #define TEST_CASE( testnum, testreg, correctval, code... ) \
 test_ ## testnum: \
-    code; \
-    li  x7, MASK_XLEN(correctval); \
-    li  TESTNUM, testnum; \
+    code;                             \
+    li  x7, MASK_XLEN(correctval);              \
+    li  TESTNUM, testnum;                       \
+    csrrw x0, 0xcdb, TESTNUM;                   \
+    csrrw x0, 0xcdb, x7;                        \
+    csrrw x0, 0xcdb, testreg;                   \
     bne testreg, x7, fail;
 
 # We use a macro hack to simpify code generation for various numbers
