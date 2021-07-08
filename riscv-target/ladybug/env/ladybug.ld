@@ -19,6 +19,6 @@ SECTIONS
   .data.string : { *(.data.string) } > cram
   .tohost : { *(.tohost) } > mmio
   .bss : { *(.bss) } > aram
-  .signature : { *(.signature) } > sigram
+  .signature : { *(.signature) } > cram
   _end = .;
 }

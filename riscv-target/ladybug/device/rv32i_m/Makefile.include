@@ -13,7 +13,7 @@ COMPILE_CMD=\
 		-I$(TARGETDIR)/$(RISCV_TARGET)/ \
 		-T$(TARGETDIR)/$(RISCV_TARGET)/env/ladybug.ld $$< \
 		-o $$@; \
-	$$(RISCV_OBJCOPY) -O binary -R .signature -R .tohost $$@ $$@.bin; \
+	$$(RISCV_OBJCOPY) -O binary -R .tohost $$@ $$@.bin; \
 	$$(RISCV_OBJCOPY) -O binary --only-section=.signature $$@ $$@.signature.bin; \
 	echo "Compile Success."
 
